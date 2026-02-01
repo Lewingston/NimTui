@@ -45,6 +45,13 @@ set(WARNING_FLAGS
     -Wwrite-strings
     -Werror=return-type)
 
+set(TEST_COMPILE_FLAGS
+    --coverage
+    -fno-inline
+    -fno-inline-functions
+    -fno-inline-functions-called-once
+    -fno-lto)
+
 set(INCLUDE_DIRS
     src/
     src/Common/
@@ -60,36 +67,27 @@ list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 # Test files
 file(GLOB_RECURSE TEST_FILES CONFIGURE_DEPENDS ./test/*.cpp ./test/*.h)
 
-# Build ImTui Library
-add_library(${Name}.lib ${SOURCE_FILES})
-
 # Build expectuable
-add_executable(${Name} src/main.cpp)
+add_executable(${Name} ${SOURCE_FILES} src/main.cpp)
 
 # Build test executable
-add_executable(${Name}.test ${TEST_FILES})
+add_executable(${Name}.test ${SOURCE_FILES} ${TEST_FILES})
 
 # Set include directories
 target_include_directories(${Name} SYSTEM PRIVATE ${INCLUDE_DIRS})
-target_include_directories(${Name}.lib SYSTEM PRIVATE ${INCLUDE_DIRS})
 target_include_directories(${Name}.test SYSTEM PRIVATE ${INCLUDE_DIRS})
-
-# Library build configuration
-target_compile_options(${Name}.lib PRIVATE ${WARNING_FLAGS})
 
 # Executable build configuration
 target_link_options(${Name} PRIVATE -static -static-libgcc -static-libstdc++)
 target_compile_options(${Name} PRIVATE ${WARNING_FLAGS})
-target_link_libraries(${Name} PRIVATE ${Name}.lib)
 
 # Test buidl configuration
 add_subdirectory(lib/googletest)
-target_link_libraries(${Name}.test PRIVATE GTest::gtest_main ${Name}.lib)
-target_compile_options(${Name}.test PRIVATE --coverage)
-target_link_options(${Name}.test PRIVATE --coverage)
+target_link_libraries(${Name}.test PRIVATE GTest::gtest_main)
+target_compile_options(${Name}.test PRIVATE ${WARNING_FLAGS} ${TEST_COMPILE_FLAGS})
+target_link_options(${Name}.test PRIVATE --coverage -fno-lto)
 
 # Register tests
-#add_test(NAME ImTuiTest COMMAND ${Name}.test)
 include(GoogleTest)
 gtest_discover_tests(${Name}.test)
 
