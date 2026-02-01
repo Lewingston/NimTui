@@ -64,5 +64,89 @@ TEST(RenderBuffer, SetData) {
 
 TEST(RenderBuffer, GetDataFromInvalidPosition) {
 
-    const RenderBuffer buffer({4, 4});
+    RenderBuffer buffer({4, 4});
+
+    // change every character in the buffer
+    for (u32 x = 0; x < buffer.getSize().getX(); x++) {
+        for (u32 y = 0; y < buffer.getSize().getY(); y++) {
+
+            buffer.set({x, y}, {"X", Color::GREEN, Color::RED});
+        }
+    }
+
+    const RenderBuffer::CharData& data = buffer.get({0, 4});
+
+    const RenderBuffer::CharData defaultData;
+
+    ASSERT_EQ(data, defaultData);
+}
+
+
+TEST(RenderBuffer, CreateTerminalSequence) {
+
+    RenderBuffer buffer({2, 1});
+    buffer.set({0, 0}, {"a", Color::RED, Color::BLUE});
+    buffer.set({1, 0}, {"b", Color::RED, Color::BLUE});
+
+    {
+        const std::string seq = buffer.createTerminalSequence();
+
+        const std::string refSeq =
+            "\x1b[0;0H"          // Move cursor to position 0, 0
+            "\x1b[38;2;255;0;0m" // Set front color to red
+            "\x1b[48;2;0;0;255m" // Set back color to blue
+            "a"                  // Print first character
+            "b";                 // Print second character
+
+        ASSERT_EQ(seq, refSeq);
+    }
+
+    { // when generating the sequence a second time, nothing should be
+      // put on the console, because no characters where changed
+
+        const std::string seq = buffer.createTerminalSequence();
+
+        ASSERT_EQ(seq, "");
+    }
+
+    { // Test sequqnce generation on render buffer of size 0
+
+        RenderBuffer buffer({0, 0});
+        const std::string seq = buffer.createTerminalSequence();
+        ASSERT_EQ(seq, "");
+    }
+}
+
+
+TEST(RenderBufferCharData, EqualOperator) {
+
+    using CharData = RenderBuffer::CharData;
+
+    { // Should be equal
+        const CharData data1{"a", Color::RED, Color::WHITE};
+        const CharData data2{"a", Color::RED, Color::WHITE};
+
+        EXPECT_TRUE(data1 == data2);
+    }
+
+    { // Different character
+        const CharData data1{"a", Color::GREEN, Color::GREEN};
+        const CharData data2{"b", Color::GREEN, Color::GREEN};
+
+        EXPECT_FALSE(data1 == data2);
+    }
+
+    { // Different front color
+        const CharData data1("a", Color::RED, Color::WHITE);
+        const CharData data2("a", Color::BLUE, Color::WHITE);
+
+        EXPECT_FALSE(data1 == data2);
+    }
+
+    { // Different back color
+        const CharData data1("a", Color::RED, Color::WHITE);
+        const CharData data2("a", Color::RED, Color::BLACK);
+
+        EXPECT_FALSE(data1 == data2);
+    }
 }
