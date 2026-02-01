@@ -50,7 +50,8 @@ set(TEST_COMPILE_FLAGS
     -fno-inline
     -fno-inline-functions
     -fno-inline-functions-called-once
-    -fno-lto)
+    -fno-lto
+    -O0)
 
 set(INCLUDE_DIRS
     src/
