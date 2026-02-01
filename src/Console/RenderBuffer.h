@@ -18,7 +18,7 @@ namespace TUI {
                 Color       frontColor = Color::BLACK;
                 Color       backColor  = Color::WHITE;
 
-                [[nodiscard]] bool operator==(const CharData& data) {
+                [[nodiscard]] constexpr bool operator==(const CharData& data) const noexcept {
 
                     return character  == data.character &&
                            frontColor == data.frontColor &&
