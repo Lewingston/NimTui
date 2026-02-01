@@ -14,14 +14,14 @@ namespace TUI {
             static const Color BLUE;
             static const Color GREEN;
 
-            Color(u8 r, u8 g, u8 b) :
+            constexpr Color(u8 r, u8 g, u8 b) :
                 r(r), g(g), b(b) {}
 
-            [[nodiscard]] u8 getR() const noexcept { return r; }
-            [[nodiscard]] u8 getG() const noexcept { return g; }
-            [[nodiscard]] u8 getB() const noexcept { return b; }
+            [[nodiscard]] constexpr u8 getR() const noexcept { return r; }
+            [[nodiscard]] constexpr u8 getG() const noexcept { return g; }
+            [[nodiscard]] constexpr u8 getB() const noexcept { return b; }
 
-            [[nodiscard]] bool operator==(const Color& c) const noexcept {
+            [[nodiscard]] constexpr bool operator==(const Color& c) const noexcept {
                 return r == c.r && g == c.g && b == c.b;
             }
 
