@@ -8,7 +8,7 @@
 
 namespace TUI {
 
-    class RenderBuffer {
+    class RenderBuffer final {
 
         public:
 
@@ -27,8 +27,6 @@ namespace TUI {
             };
 
             RenderBuffer(Vec2<u32> size);
-
-            virtual ~RenderBuffer() = default;
 
             void set(Vec2<u32> pos, const CharData& charData);
             [[nodiscard]] const CharData& get(Vec2<u32> pos) const;
