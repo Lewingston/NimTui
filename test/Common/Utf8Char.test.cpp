@@ -39,11 +39,49 @@ TEST(Utf8Char, GetByteCount) {
 }
 
 
+TEST(Utf8Char, CharacterDisplaySize) {
+
+    { // Ascii character, normal width
+
+        const Utf8Char utf8Char("d");
+        EXPECT_FALSE(utf8Char.isFullWidth());
+    }
+
+    { // unlaut character, normal width
+
+        const Utf8Char utf8Char("Ö");
+        EXPECT_FALSE(utf8Char.isFullWidth());
+    }
+
+    { // emoji character, full width
+
+        const Utf8Char utf8Char("😜");
+        EXPECT_TRUE(utf8Char.isFullWidth());
+    }
+}
+
+
+TEST(Utf8Char, DefaultConstructor) {
+
+    // Test heap allocation for test coverage
+    auto utf8Char = std::make_unique<Utf8Char>();
+
+    EXPECT_EQ(utf8Char->getByteCount(), 0);
+
+    EXPECT_EQ(utf8Char->getBytes().at(0), 0);
+    EXPECT_EQ(utf8Char->getBytes().at(1), 0);
+    EXPECT_EQ(utf8Char->getBytes().at(2), 0);
+    EXPECT_EQ(utf8Char->getBytes().at(3), 0);
+
+    EXPECT_EQ(utf8Char->toString(), "");
+}
+
+
 TEST(Utf8Char, ConstructFromCharPtr) {
 
     { // Test ASCII character
 
-        constexpr Utf8Char utf8Char("a");
+        const Utf8Char utf8Char("a");
 
         // Check number of utf8 bytes
         EXPECT_EQ(utf8Char.getByteCount(), 1);
@@ -60,7 +98,7 @@ TEST(Utf8Char, ConstructFromCharPtr) {
 
     { // Test Umlaut
 
-        constexpr Utf8Char utf8Char("ü");
+        const Utf8Char utf8Char("ü");
 
         // Check number of utf8 bytes
         EXPECT_EQ(utf8Char.getByteCount(), 2);
@@ -77,7 +115,7 @@ TEST(Utf8Char, ConstructFromCharPtr) {
 
     { // Test emoji
 
-        constexpr Utf8Char utf8Char("😉");
+        const Utf8Char utf8Char("😉");
 
         // Check number of utf8 bytes
         EXPECT_EQ(utf8Char.getByteCount(), 4);
@@ -94,7 +132,7 @@ TEST(Utf8Char, ConstructFromCharPtr) {
 
     { // Test empty string
 
-        constexpr Utf8Char utf8Char("");
+        const Utf8Char utf8Char("");
 
         // Check number of utf8 bytes
         EXPECT_EQ(utf8Char.getByteCount(), 0);
@@ -144,5 +182,34 @@ TEST(Utf8Char, EqualsOperator) {
         Utf8Char char2("Ü");
 
         EXPECT_FALSE(char1 == char2);
+    }
+}
+
+
+TEST(Utf8Char, ConstructFromLiteral) {
+
+    { // normal construction
+
+        const Utf8Char utf8Char = "Z"_u8;
+
+        EXPECT_EQ(utf8Char.getByteCount(), 1);
+        EXPECT_EQ(utf8Char.toString(), "Z");
+    }
+
+    { // construction from empty string
+
+        const Utf8Char utf8Char = ""_u8;
+
+        EXPECT_EQ(utf8Char.getByteCount(), 0);
+        EXPECT_EQ(utf8Char.toString(), "");
+    }
+
+    { // Test literal function with string of size 0
+
+        const char* test = "";
+        const Utf8Char utf8Char = operator ""_u8(test, 0);
+
+        EXPECT_EQ(utf8Char.getByteCount(), 0);
+        EXPECT_EQ(utf8Char.toString(), "");
     }
 }

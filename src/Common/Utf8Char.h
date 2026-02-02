@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Types.h"
+#include "wtswidth.h"
 
 #include <array>
 #include <string>
@@ -12,10 +13,9 @@ namespace TUI {
 
         public:
 
-            constexpr Utf8Char() = default;
+            Utf8Char() = default;
 
-
-            constexpr Utf8Char(const char* str) {
+            Utf8Char(const char* str) {
 
                 const u8 count = getByteCount(static_cast<u8>(str[0]));
                 if (count > 4)
@@ -24,6 +24,8 @@ namespace TUI {
                 for (u8 ii = 0; ii < count; ii++) {
                     bytes[ii] = static_cast<u8>(str[ii]);
                 }
+
+                fullWidth = wts8width(str, count) == 2;
             };
 
 
@@ -67,9 +69,14 @@ namespace TUI {
                 return bytes == character.bytes;
             }
 
+
+            [[nodiscard]] constexpr bool isFullWidth() const noexcept { return fullWidth; }
+
         private:
 
             std::array<u8, 4> bytes { 0 };
+
+            bool fullWidth = false;
     };
 
 
