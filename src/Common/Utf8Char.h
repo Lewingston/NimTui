@@ -73,7 +73,10 @@ namespace TUI {
     };
 
 
-    [[nodiscard]] inline constexpr Utf8Char operator ""_u8(const char* str, std::size_t) {
+    [[nodiscard]] inline constexpr Utf8Char operator ""_u8(const char* str, const std::size_t size) {
+
+        if (size == 0)
+            return Utf8Char();
 
         return Utf8Char(str);
     }
