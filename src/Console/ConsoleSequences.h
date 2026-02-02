@@ -35,19 +35,19 @@ namespace TUI {
                 return "\x1b[?25l";
             }
 
-            [[nodiscard]] static std::string setCursorPos(u32 x, u32 y) {
+            [[nodiscard]] static constexpr std::string setCursorPos(u32 x, u32 y) {
 
                 return "\x1b[" + std::to_string(y) + ";" + std::to_string(x) + "H";
             }
 
-            [[nodiscard]] static std::string setFrontColor(Color color) {
+            [[nodiscard]] static constexpr std::string setFrontColor(Color color) {
 
                 return "\x1b[38;2;" + std::to_string(color.getR()) + ";" +
                                       std::to_string(color.getG()) + ";" +
                                       std::to_string(color.getB()) + "m";
             }
 
-            [[nodiscard]] static std::string setBackColor(Color color) {
+            [[nodiscard]] static constexpr std::string setBackColor(Color color) {
 
                 return "\x1b[48;2;" + std::to_string(color.getR()) + ";" +
                                       std::to_string(color.getG()) + ";" +
