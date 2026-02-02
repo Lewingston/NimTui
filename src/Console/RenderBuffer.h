@@ -2,6 +2,7 @@
 
 #include "Color.h"
 #include "Vec.h"
+#include "Utf8Char.h"
 
 #include <vector>
 #include <string>
@@ -14,9 +15,9 @@ namespace TUI {
 
             struct CharData
             {
-                std::string character  = " ";
-                Color       frontColor = Color::BLACK;
-                Color       backColor  = Color::WHITE;
+                Utf8Char character{" "};
+                Color    frontColor = Color::BLACK;
+                Color    backColor  = Color::WHITE;
 
                 [[nodiscard]] constexpr bool operator==(const CharData& data) const noexcept {
 

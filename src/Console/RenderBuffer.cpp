@@ -79,7 +79,7 @@ std::string RenderBuffer::createTerminalSequence() {
                 seq += ConsoleSequences::setBackColor(charData.backColor);
             }
 
-            seq += charData.character;
+            seq += charData.character.toString();
 
             moveCursor = false;
             dirty[index] = false;
