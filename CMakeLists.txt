@@ -56,7 +56,8 @@ set(TEST_COMPILE_FLAGS
 set(INCLUDE_DIRS
     src/
     src/Common/
-    lib/)
+    lib/
+    lib/wtswidth)
 
 set(CMAKE_CXX_FLAGS_DEBUG "-g -Og")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
@@ -64,6 +65,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3")
 # All source files; Excluding main.cpp
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.h)
 list(REMOVE_ITEM SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+
+list(APPEND SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/lib/wtswidth/wtswidth.c")
 
 # Test files
 file(GLOB_RECURSE TEST_FILES CONFIGURE_DEPENDS ./test/*.cpp ./test/*.h)
