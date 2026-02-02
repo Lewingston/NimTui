@@ -8,19 +8,19 @@ using namespace TUI;
 
 TEST(ConsoleSequences, SequencesWithoutParameters) {
 
-    std::string_view enterAlternateMode = ConsoleSequences::enterAlternateMode();
+    constexpr std::string_view enterAlternateMode = ConsoleSequences::enterAlternateMode();
     EXPECT_EQ(enterAlternateMode, "\x1b[?1049h");
 
-    std::string_view leaveAlternateMode = ConsoleSequences::leaveAlternateMode();
+    constexpr std::string_view leaveAlternateMode = ConsoleSequences::leaveAlternateMode();
     EXPECT_EQ(leaveAlternateMode, "\x1b[?1049l");
 
-    std::string_view showCursor = ConsoleSequences::showCursor();
+    constexpr std::string_view showCursor = ConsoleSequences::showCursor();
     EXPECT_EQ(showCursor, "\x1b[?25h");
 
-    std::string_view hideCursor = ConsoleSequences::hideCursor();
+    constexpr std::string_view hideCursor = ConsoleSequences::hideCursor();
     EXPECT_EQ(hideCursor, "\x1b[?25l");
 
-    std::string_view resetTextFormat = ConsoleSequences::resetTextFormat();
+    constexpr std::string_view resetTextFormat = ConsoleSequences::resetTextFormat();
     EXPECT_EQ(resetTextFormat, "\x1b[0m");
 }
 
