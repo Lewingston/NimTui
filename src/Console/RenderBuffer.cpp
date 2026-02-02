@@ -48,6 +48,8 @@ std::string RenderBuffer::createTerminalSequence() {
     std::string seq;
 
     bool moveCursor = true;
+    bool skipNextChar = false;
+
     std::optional<Color> frontColor;
     std::optional<Color> backColor;
 
@@ -55,6 +57,12 @@ std::string RenderBuffer::createTerminalSequence() {
         for (u32 x = 0; x < size.getWidth(); x++) {
 
             const std::size_t index = posToIndex({ x, y });
+
+            if (skipNextChar) {
+                skipNextChar = false;
+                dirty[index] = false;
+                continue;
+            }
 
             if (!dirty[index]) {
                 moveCursor = true;
@@ -67,18 +75,26 @@ std::string RenderBuffer::createTerminalSequence() {
 
             const CharData& charData = characters[index];
 
+            // If the current character is full width, skip the next character
+            if (charData.character.isFullWidth()) {
+                skipNextChar = true;
+            }
+
+            // Change the front color if required
             if (!frontColor.has_value() || frontColor.value() != charData.frontColor) {
 
                 frontColor =  charData.frontColor;
                 seq += ConsoleSequences::setFrontColor(charData.frontColor);
             }
 
+            // Change the back color if required
             if (!backColor.has_value() || backColor.value() != charData.backColor) {
 
                 backColor = charData.backColor;
                 seq += ConsoleSequences::setBackColor(charData.backColor);
             }
 
+            // Print the current character
             seq += charData.character.toString();
 
             moveCursor = false;

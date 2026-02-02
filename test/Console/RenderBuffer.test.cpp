@@ -118,6 +118,33 @@ TEST(RenderBuffer, CreateTerminalSequence) {
 }
 
 
+TEST(RenderBuffer, CreateTermianlSequqnceFullWidthChar) {
+
+    RenderBuffer buffer({2, 1});
+    buffer.set({0, 0}, {"😠", Color::WHITE, Color::BLACK});
+    buffer.set({1, 0}, {"x",  Color::WHITE, Color::BLACK});
+
+    {
+        const std::string seq = buffer.createTerminalSequence();
+
+        const std::string refSeq =
+            "\x1b[0;0H"              // Move cursor to position 0, 0
+            "\x1b[38;2;255;255;255m" // Set front color to white
+            "\x1b[48;2;0;0;0m"       // Set back color to black
+            "😠";                    // print first character
+
+        ASSERT_EQ(seq, refSeq);
+    }
+
+    { // second sequqnce generation should be empty, all characters are clean
+
+        const std::string seq = buffer.createTerminalSequence();
+
+        ASSERT_EQ(seq, "");
+    }
+}
+
+
 TEST(RenderBufferCharData, EqualOperator) {
 
     using CharData = RenderBuffer::CharData;
