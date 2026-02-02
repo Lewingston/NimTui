@@ -14,19 +14,24 @@ Text::Text(const std::string& text, Vec2<s32> pos) :
 
 void Text::draw(RenderBuffer& buffer) const {
 
-    for (u32 ii = 0; ii < text.size(); ii++) {
+    s32 posX = getPos().getX();
+    const s32 posY = getPos().getY();
 
-        const s32 posX = getPos().getX() + static_cast<s32>(ii);
-        const s32 posY = getPos().getY();
+    for (u32 ii = 0; ii < text.size();) {
+
+        const u8 byteCount = Utf8Char::getByteCount(static_cast<u8>(text.at(ii)));
 
         if (posX < 0 || posY < 0)
             continue;
 
         buffer.set({static_cast<u32>(posX), static_cast<u32>(posY)},
                    {
-                   text.substr(ii, 1),
+                   Utf8Char(text.c_str() + ii),
                     frontColor,
                     backColor
                    });
+
+        ii += byteCount;
+        posX += 1;
     }
 }
