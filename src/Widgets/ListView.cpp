@@ -187,6 +187,7 @@ void ListView::removeAllElements() {
     elements.clear();
 
     selectedElementIndex = 0;
+    scrollPosition = 0;
 }
 
 
