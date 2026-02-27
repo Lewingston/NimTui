@@ -24,14 +24,13 @@ void Text::draw(RenderBuffer& buffer) const {
         if (posX < 0 || posY < 0)
             continue;
 
-        buffer.set({static_cast<u32>(posX), static_cast<u32>(posY)},
-                   {
-                   Utf8Char(text.c_str() + ii),
-                    frontColor,
-                    backColor
-                   });
+        const Utf8Char utf8Char(text.c_str() + ii);
+
+        buffer.set({ static_cast<u32>(posX), static_cast<u32>(posY) },
+                   { utf8Char, frontColor, backColor });
 
         ii += byteCount;
-        posX += 1;
+
+        posX += utf8Char.isFullWidth() ? 2 : 1;
     }
 }

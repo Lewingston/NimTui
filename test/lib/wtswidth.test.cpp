@@ -4,7 +4,7 @@
 #include "wtswidth.h"
 
 
-TEST(Lib, wtswidth) {
+TEST(Lib, wts8width) {
 
     { // ascii character normal width
 
@@ -23,6 +23,13 @@ TEST(Lib, wtswidth) {
     { // emoji character full width
 
         const std::string str = "😡";
+
+        EXPECT_EQ(wts8width(str.c_str(), str.length()), 2);
+    }
+
+    {
+
+        const std::string str = "☠️";
 
         EXPECT_EQ(wts8width(str.c_str(), str.length()), 2);
     }

@@ -1,6 +1,7 @@
 
 #include "ListView.h"
 #include "Primitives/Text.h"
+#include "Console/ConsoleString.h"
 
 #include <algorithm>
 
@@ -45,7 +46,8 @@ void ListView::drawListElement(const std::string& entry,
                                Vec2<s32> offset)
 {
 
-    Text text(entry.substr(0, getSize().getWidth()), offset);
+    const std::string str = ConsoleString::getSubstring(entry, 0, getSize().getWidth());
+    Text text(str, offset);
 
     if (selected) {
 

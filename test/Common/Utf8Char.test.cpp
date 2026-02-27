@@ -36,6 +36,25 @@ TEST(Utf8Char, GetByteCount) {
         EXPECT_GT(Utf8Char::getByteCount(0b1111'1000), 4);
         EXPECT_GT(Utf8Char::getByteCount(0b1111'1111), 4);
     }
+
+    {
+        EXPECT_EQ(Utf8Char::getByteCount('a'), 1);
+    }
+
+    {
+        const std::string t = "ä";
+        EXPECT_EQ(Utf8Char::getByteCount(static_cast<u8>(t.at(0))), 2);
+    }
+
+    {
+        const std::string t = "🙃";
+        EXPECT_EQ(Utf8Char::getByteCount(static_cast<u8>(t.at(0))), 4);
+    }
+
+    {
+        const std::string t = "💀";
+        EXPECT_EQ(Utf8Char::getByteCount(static_cast<u8>(t.at(0))), 4);
+    }
 }
 
 
