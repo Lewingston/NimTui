@@ -76,7 +76,7 @@ std::string RenderBuffer::createTerminalSequence() {
             const CharData& charData = characters[index];
 
             // If the current character is full width, skip the next character
-            if (charData.character.isFullWidth()) {
+            if (charData.grapheme.isFullWidth()) {
                 skipNextChar = true;
             }
 
@@ -95,7 +95,7 @@ std::string RenderBuffer::createTerminalSequence() {
             }
 
             // Print the current character
-            seq += charData.character.toString();
+            seq += charData.grapheme.getStr();
 
             moveCursor = false;
             dirty[index] = false;

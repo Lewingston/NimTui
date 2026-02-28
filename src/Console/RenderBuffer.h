@@ -2,7 +2,7 @@
 
 #include "Color.h"
 #include "Vec.h"
-#include "Utf8Char.h"
+#include "Grapheme.h"
 
 #include <vector>
 #include <string>
@@ -15,13 +15,13 @@ namespace TUI {
 
             struct CharData
             {
-                Utf8Char character{" "};
+                Grapheme grapheme {" "};
                 Color    frontColor = Color::BLACK;
                 Color    backColor  = Color::WHITE;
 
                 [[nodiscard]] constexpr bool operator==(const CharData& data) const noexcept {
 
-                    return character  == data.character &&
+                    return grapheme   == data.grapheme   &&
                            frontColor == data.frontColor &&
                            backColor  == data.backColor;
                 }

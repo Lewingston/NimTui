@@ -6,32 +6,6 @@
 using namespace TUI;
 
 
-TEST(ConsoleString, GetByteCountForConsoleSize) {
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("TestString", 4), 4);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("blabla", 8), 6);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("123456", 6), 6);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("123456", 5), 5);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("1234Ü", 20), 6);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("12ö56ä89", 4), 5);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("äöüäöü", 6), 12);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("äöüäö", 5), 10);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("123😁456", 8), 10);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("🧐🤓😎🥸", 4), 8);
-
-    EXPECT_EQ(ConsoleString::getByteCountForConsoleSize("🧐🤓😎🥸", 3), 8);
-}
-
-
 TEST(ConsoleString, GetSubstring) {
 
     EXPECT_EQ(ConsoleString::getSubstring("ABCD", 0, 4), "ABCD");
@@ -59,4 +33,10 @@ TEST(ConsoleString, GetSubstring) {
     EXPECT_EQ(ConsoleString::getSubstring("12😍😍💀💀7890", 0, 7), "12😍😍 ");
 
     EXPECT_EQ(ConsoleString::getSubstring("💀💀😍😍😍ABCDEFGH", 3, 9), " 😍😍😍AB");
+
+    EXPECT_EQ(ConsoleString::getSubstring("😐❤️❤️😐", 2, 4), "❤️❤️");
+
+    EXPECT_EQ(ConsoleString::getSubstring("☠️☠️❤️❤️❤️☠️☠️☠️", 4, 6), "❤️❤️❤️");
+
+    EXPECT_EQ(ConsoleString::getSubstring("🏳️‍🌈🏳️‍🌈🏳️‍🌈", 1, 4), " 🏳️‍🌈 ");
 }

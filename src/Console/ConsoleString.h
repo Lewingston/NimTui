@@ -16,9 +16,5 @@ namespace TUI {
                                                           std::size_t pos,
                                                           std::size_t count);
 
-            [[nodiscard]] static std::size_t getByteCountForConsoleSize(const std::string& str,
-                                                                        std::size_t size);
-
-        private:
     };
 }

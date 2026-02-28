@@ -1,6 +1,7 @@
 
 #include "Text.h"
 #include "Console/RenderBuffer.h"
+#include "Common/Unicode.h"
 
 using namespace TUI;
 
@@ -19,18 +20,16 @@ void Text::draw(RenderBuffer& buffer) const {
 
     for (u32 ii = 0; ii < text.size();) {
 
-        const u8 byteCount = Utf8Char::getByteCount(static_cast<u8>(text.at(ii)));
+        //if (posX < 0 || posY < 0)
+        //    continue;
 
-        if (posX < 0 || posY < 0)
-            continue;
-
-        const Utf8Char utf8Char(text.c_str() + ii);
+        const auto info = Unicode::getInfo(text, ii);
 
         buffer.set({ static_cast<u32>(posX), static_cast<u32>(posY) },
-                   { utf8Char, frontColor, backColor });
+                   { text.substr(ii, info.byteCount), frontColor, backColor });
 
-        ii += byteCount;
+        ii += info.byteCount;
 
-        posX += utf8Char.isFullWidth() ? 2 : 1;
+        posX += info.width;
     }
 }

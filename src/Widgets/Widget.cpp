@@ -35,7 +35,7 @@ void Widget::draw(RenderBuffer& buffer, Vec2<s32> offset) {
             const Vec2<u32> pos = { static_cast<u32>(posX), static_cast<u32>(posY) };
 
             buffer.set(pos, {
-                " "_u8,
+                " ",
                 buffer.get(pos).frontColor,
                 backColor
             });

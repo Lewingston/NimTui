@@ -21,7 +21,7 @@ TEST(RenderBuffer, Constructor) {
 
             const RenderBuffer::CharData& data = buffer.get({x, y});
 
-            ASSERT_EQ(data.character, " ");
+            ASSERT_EQ(data.grapheme, " ") << " X: " << x << " Y: " << y;
             ASSERT_EQ(data.frontColor, Color::BLACK);
             ASSERT_EQ(data.backColor, Color::WHITE);
         }
@@ -38,7 +38,7 @@ TEST(RenderBuffer, SetData) {
     const RenderBuffer::CharData& data = buffer.get({2, 3});
 
     // Check if character was correcty set
-    ASSERT_EQ(data.character, "A");
+    ASSERT_EQ(data.grapheme, "A");
     ASSERT_EQ(data.frontColor, Color::RED);
     ASSERT_EQ(data.backColor, Color::BLUE);
 
@@ -54,7 +54,7 @@ TEST(RenderBuffer, SetData) {
 
             const RenderBuffer::CharData& data = buffer.get({x, y});
 
-            ASSERT_EQ(data.character, " ");
+            ASSERT_EQ(data.grapheme, " ") << " X: " << x << " Y: " << y;
             ASSERT_EQ(data.frontColor, Color::BLACK);
             ASSERT_EQ(data.backColor, Color::WHITE);
         }
