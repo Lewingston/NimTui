@@ -103,3 +103,7 @@ add_custom_target(coverage
     COMMAND gcovr -r ../src/ . --html-nested --html-theme github.dark-green --output coverage/coverage.html
     COMMAND del /S /Q *.gcda
 )
+
+add_custom_target(clean_coverage
+    COMMAND del /S /Q *.gcda
+)
