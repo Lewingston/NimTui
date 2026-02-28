@@ -12,6 +12,41 @@ set(IMTUI_BUILD_DEMO       ON  CACHE BOOL "Build Demo")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(WARNING_FLAGS
+    -Wall
+    -Wextra
+    -pedantic
+    -Wnon-virtual-dtor
+    -Wold-style-cast
+    -Wcast-align
+    -Wunused
+    -Woverloaded-virtual
+    -Wpedantic
+    -Wconversion
+    -Wsign-conversion
+    -Wmisleading-indentation
+    -Wduplicated-cond
+    -Wduplicated-branches
+    -Wnull-dereference
+    -Wfloat-equal
+    -Wformat=2
+    -Wlogical-op
+    -Wmissing-declarations
+    -Wmissing-include-dirs
+    -Wpointer-arith
+    -Wredundant-decls
+    -Wsequence-point
+    -Wswitch
+    -Wundef
+    -Wuseless-cast
+    -Wimplicit-fallthrough
+    -Wunreachable-code
+    -Wunused-but-set-parameter
+    -Wwrite-strings
+    -Werror=return-type
+)
+
+add_compile_options(${WARNING_FLAGS})
 if (IMTUI_BUILD_STATIC_LIB OR IMTUI_BUILD_SHARED_LIB)
 
     add_subdirectory(src)
