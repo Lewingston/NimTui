@@ -1,6 +1,5 @@
 
 #include "Widget.h"
-#include "Utf8Char.h"
 #include "Console/RenderBuffer.h"
 
 using namespace TUI;
