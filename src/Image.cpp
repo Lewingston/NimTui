@@ -1,7 +1,7 @@
 
 #include "Image.h"
 #include "Color.h"
-#include "ConsoleWindow.h"
+//#include "ConsoleWindow.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"

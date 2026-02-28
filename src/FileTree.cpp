@@ -1,6 +1,5 @@
 
 #include "FileTree.h"
-#include "ConsoleWindow.h"
 
 #include <algorithm>
 #include <filesystem>
