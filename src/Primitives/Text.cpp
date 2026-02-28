@@ -20,16 +20,25 @@ void Text::draw(RenderBuffer& buffer) const {
 
     for (u32 ii = 0; ii < text.size();) {
 
-        //if (posX < 0 || posY < 0)
-        //    continue;
-
         const auto info = Unicode::getInfo(text, ii);
 
-        buffer.set({ static_cast<u32>(posX), static_cast<u32>(posY) },
-                   { text.substr(ii, info.byteCount), frontColor, backColor });
+        if (checkBounds(posX, posY, buffer.getSize())) {
+
+            buffer.set({ static_cast<u32>(posX), static_cast<u32>(posY) },
+                       { text.substr(ii, info.byteCount), frontColor, backColor });
+        }
 
         ii += info.byteCount;
 
         posX += info.width;
     }
+}
+
+
+bool Text::checkBounds(s32 posX, s32 posY, Vec2<u32> bufferSize) const {
+
+    return posX >= 0 &&
+           posY >= 0 &&
+           posX < static_cast<s32>(bufferSize.getWidth()) &&
+           posY < static_cast<s32>(bufferSize.getHeight());
 }

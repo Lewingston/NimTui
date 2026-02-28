@@ -20,6 +20,8 @@ namespace TUI {
 
         private:
 
+            [[nodiscard]] bool checkBounds(s32 posX, s32 posY, Vec2<u32> bufferSize) const;
+
             std::string text;
 
             Color frontColor = Color::WHITE;
