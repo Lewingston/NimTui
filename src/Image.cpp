@@ -3,11 +3,15 @@
 #include "Color.h"
 //#include "ConsoleWindow.h"
 
+/*
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
+*/
 
+/*
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "stb/stb_image_resize2.h"
+*/
 
 #include <stdexcept>
 #include <iostream>
@@ -29,6 +33,7 @@ Image Image::loadFromFile(const std::string& file) {
 
     Image image;
 
+    /*
     image.data = std::shared_ptr<unsigned char>(
         stbi_load(
             file.c_str(),
@@ -38,6 +43,7 @@ Image Image::loadFromFile(const std::string& file) {
             0
         )
     );
+    */
 
     if (image.data == nullptr) {
         throw std::runtime_error("Failed to laod image: " + file);
@@ -127,6 +133,7 @@ Image Image::scale(f32 scaleX, f32 scaleY) const {
     scaledImage.width  = static_cast<s32>(scaleX * static_cast<f32>(width));
     scaledImage.height = static_cast<s32>(scaleY * static_cast<f32>(height));
 
+    /*
     scaledImage.data = std::shared_ptr<unsigned char>(
         stbir_resize_uint8_srgb(
             data.get(), // input pixel data
@@ -140,6 +147,7 @@ Image Image::scale(f32 scaleX, f32 scaleY) const {
             colorChannels == 4 ? STBIR_RGBA : STBIR_RGB
         )
     );
+    */
 
     std::cout << "Image loaded: width=" << scaledImage.width <<
         " height=" << scaledImage.height <<
