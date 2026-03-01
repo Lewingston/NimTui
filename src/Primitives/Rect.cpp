@@ -69,16 +69,6 @@ void Rect::fillin(RenderBuffer& buffer) const {
 
 void Rect::drawBorder(RenderBuffer& buffer) const {
 
-    /*
-    const std::array horizontalBorderElements = {
-        "█", "▇", "▆", "▆", "▅", "▄", "▂", "▁"
-    };
-
-    const std::array verticalBorderElements = {
-        "█", "▉", "▊", "▋", "▌", "▍", "▎", " ▏"
-    };
-    */
-
     const std::array horizontalElements1 = {
         "▄", "▃", "▂ ", "▁"
     };
@@ -107,7 +97,7 @@ void Rect::drawBorder(RenderBuffer& buffer) const {
                        horizontalElements2.at(eleIndex),
                    Line::Mode::HORIZONTAL);
     topBorder.setFrontColor(horizontalInset() ? borderColor : backColor);
-    topBorder.setBackColor(horizontalInset() ? backColor : borderColor);
+    topBorder.setBackColor(horizontalInset() ? Color::TRANSP : borderColor);
 
     topBorder.draw(buffer);
 
@@ -119,8 +109,9 @@ void Rect::drawBorder(RenderBuffer& buffer) const {
                           horizontalElements2.at(eleIndex) :
                           horizontalElements1.at(eleIndex),
                       Line::Mode::HORIZONTAL);
-    bottomBorder.setFrontColor(horizontalInset() ? backColor : borderColor);
-    bottomBorder.setBackColor(horizontalInset() ? borderColor : backColor);
+    bottomBorder.setFrontColor(borderColor);
+    bottomBorder.setBackColor(horizontalInset() ? Color::TRANSP : backColor);
+    bottomBorder.setInversion(horizontalInset());
 
     bottomBorder.draw(buffer);
 
@@ -133,8 +124,9 @@ void Rect::drawBorder(RenderBuffer& buffer) const {
                         verticalElements1.at(eleIndex) :
                         verticalElements2.at(eleIndex),
                     Line::Mode::VERTICAL);
-    leftBorder.setFrontColor(horizontalInset() ? borderColor : backColor);
-    leftBorder.setBackColor(horizontalInset() ? backColor : borderColor);
+    leftBorder.setFrontColor(borderColor);
+    leftBorder.setBackColor(horizontalInset() ? backColor : Color::TRANSP);
+    leftBorder.setInversion(!horizontalInset());
 
     leftBorder.draw(buffer);
 
@@ -147,7 +139,7 @@ void Rect::drawBorder(RenderBuffer& buffer) const {
                         verticalElements1.at(eleIndex),
                     Line::Mode::VERTICAL);
     rightBorder.setFrontColor(horizontalInset() ? backColor : borderColor);
-    rightBorder.setBackColor(horizontalInset() ? borderColor : backColor);
+    rightBorder.setBackColor(horizontalInset() ? borderColor : Color::TRANSP);
 
     rightBorder.draw(buffer);
 }
