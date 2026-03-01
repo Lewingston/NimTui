@@ -30,6 +30,7 @@ namespace TUI {
             RenderBuffer(Vec2<u32> size);
 
             void set(Vec2<u32> pos, const CharData& charData);
+            void setInverted(Vec2<u32> pos, const CharData& charData);
             [[nodiscard]] const CharData& get(Vec2<u32> pos) const;
 
             [[nodiscard]] const Vec2<u32>& getSize() const noexcept { return size; }

@@ -25,8 +25,27 @@ void RenderBuffer::set(Vec2<u32> pos, const CharData& charData) {
         return;
     */
 
-    characters[index] = charData;
+    characters[index] = CharData(
+        charData.grapheme,
+        charData.frontColor,
+        characters[index].backColor.overlay(charData.backColor)
+    );
+
     dirty[index] = true;
+}
+
+
+void RenderBuffer::setInverted(Vec2<u32> pos, const CharData& charData) {
+
+    const std::size_t index = posToIndex(pos);
+    if (index >= characters.size())
+        return;
+
+    set(pos, CharData(
+        charData.grapheme,
+        characters[index].backColor.overlay(charData.backColor),
+        charData.frontColor
+    ));
 }
 
 
