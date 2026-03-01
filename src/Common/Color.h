@@ -22,6 +22,12 @@ namespace TUI {
             constexpr Color(u8 r, u8 g, u8 b, u8 a = 255) :
                 r(r), g(g), b(b), a(a) {}
 
+            constexpr Color(u32 hex) :
+                r(static_cast<u8>(hex >> 24) & 0xFF),
+                g(static_cast<u8>(hex >> 16) & 0xFF),
+                b(static_cast<u8>(hex >>  8) & 0xFF),
+                a(static_cast<u8>(hex & 0xFF)) {}
+
             [[nodiscard]] constexpr u8 getR() const noexcept { return r; }
             [[nodiscard]] constexpr u8 getG() const noexcept { return g; }
             [[nodiscard]] constexpr u8 getB() const noexcept { return b; }
