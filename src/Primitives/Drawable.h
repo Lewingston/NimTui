@@ -19,6 +19,8 @@ namespace TUI {
 
             [[nodiscard]] const Vec2<s32>& getPos() const noexcept { return pos; }
 
+            void setPos(Vec2<s32> pos) {  this->pos = pos; }
+
         private:
 
             Vec2<s32> pos;
