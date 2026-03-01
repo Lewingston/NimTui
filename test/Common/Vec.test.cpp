@@ -85,3 +85,56 @@ TEST(Vec2, subOperator) {
     EXPECT_EQ(result.getX(), -7);
     EXPECT_EQ(result.getY(), 17);
 }
+
+
+TEST(Vec2, multOperator) {
+
+    const Vec2<s32> vec(3, 7);
+    const Vec2<s32> result = vec * 2;
+
+    EXPECT_EQ(result.getX(), 6);
+    EXPECT_EQ(result.getY(), 14);
+}
+
+
+TEST(Vec2, incrementOperator) {
+
+    Vec2<s32> vec1(6, 9);
+
+    vec1 += Vec2<s32>(11, -4);
+
+    EXPECT_EQ(vec1.getX(), 17);
+    EXPECT_EQ(vec1.getY(), 5);
+
+    vec1 += Vec2<s32>(0, 1);
+
+    EXPECT_EQ(vec1.getX(), 17);
+    EXPECT_EQ(vec1.getY(), 6);
+
+    vec1 += Vec2<s32>(1, 0);
+
+    EXPECT_EQ(vec1.getX(), 18);
+    EXPECT_EQ(vec1.getY(), 6);
+}
+
+
+TEST(Vec2, implicitConversion) {
+
+    { // Signed to unsigned conversion
+
+        const Vec2<s32> vec1(7, 3);
+        const Vec2<u32> vec2 = vec1;
+
+        EXPECT_EQ(vec2.getX(), 7);
+        EXPECT_EQ(vec2.getY(), 3);
+    }
+
+    { // float to int conversion
+
+        const Vec2<f32> vec1(13.4f, 7.7f);
+        const Vec2<s32> vec2 = vec1;
+
+        EXPECT_EQ(vec2.getX(), 13);
+        EXPECT_EQ(vec2.getY(), 7);
+    }
+}
