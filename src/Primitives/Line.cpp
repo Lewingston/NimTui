@@ -31,11 +31,7 @@ void Line::drawHorizontal(RenderBuffer& buffer) const {
 
     for (s32 x = getPos().getX(); x < endPos; x++) {
 
-        buffer.set(Vec2<s32>(x, getPos().getY()), {
-            seq,
-            frontColor,
-            backColor
-        });
+        setPixel(buffer, {x, getPos().getY()});
     }
 }
 
@@ -46,7 +42,24 @@ void Line::drawVertical(RenderBuffer& buffer) const {
 
     for (s32 y = getPos().getY(); y < endPos; y++) {
 
-        buffer.set(Vec2<s32>(getPos().getX(), y), {
+        setPixel(buffer, {getPos().getX(), y});
+    }
+}
+
+
+void Line::setPixel(RenderBuffer& buffer, Vec2<s32> pos) const {
+
+    if (inversion) {
+
+        buffer.setInverted(pos, {
+            seq,
+            frontColor,
+            backColor
+        });
+
+    } else {
+
+        buffer.set(pos, {
             seq,
             frontColor,
             backColor

@@ -25,10 +25,15 @@ namespace TUI {
             void setFrontColor(Color color) { frontColor = color; }
             void setBackColor(Color color) { backColor  = color; }
 
+            void setInversion(bool inversion) { this->inversion = inversion; }
+
         private:
 
             void drawHorizontal(RenderBuffer& buffer) const;
             void drawVertical(RenderBuffer& buffer) const;
+
+            void setPixel(RenderBuffer& buffer, Vec2<s32> pos) const;
+            void setInvertedPixel(RenderBuffer& buffer, Vec2<s32> pos) const;
 
             std::string seq = "#";
 
@@ -37,5 +42,7 @@ namespace TUI {
 
             Color frontColor = Color::BLACK;
             Color backColor  = Color::WHITE;
+
+            bool inversion = false;
     };
 }
