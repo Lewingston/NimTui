@@ -9,18 +9,27 @@ namespace TUI {
 
         public:
 
-            enum class Border : u8 {
-
-                VERY_THICK = 0,
-                THICK,
-                MEDIUM,
-                THIN,
-                NONE
-            };
 
             enum class BorderInset : u8 {
                 HORIZONTAL,
                 VERTICAL
+            };
+
+            struct Border {
+
+                enum Style : u8 {
+
+                    VERY_THICK = 0,
+                    THICK,
+                    MEDIUM,
+                    THIN,
+                    NONE
+                };
+
+                Border::Style style = Style::NONE;
+                Color color  = Color::BLACK;
+
+                [[nodiscard]] bool hasBorder() const noexcept { return style != Style::NONE; }
             };
 
             Rect(Vec2<s32> pos, Vec2<u32> size);
@@ -29,13 +38,15 @@ namespace TUI {
 
             void draw(RenderBuffer& buffer) const override;
 
-            void setBorder(Border border) { this->border = border; }
+            void setBorder(const Border& border);
+            void setBorderTop(const Border& border) { borderTop = border; }
+            void setBorderLeft(const Border& border) { borderLeft = border; }
+            void setBorderRight(const Border& border) { borderRight = border; }
+            void setBorderBottom(const Border& border) { borderBottom = border; }
+
             void setBorderInset(BorderInset inset) { borderInset = inset; }
 
-            void setBackColor(Color color)   { backColor = color;   }
-            void setBorderColor(Color color) { borderColor = color; }
-
-            [[nodiscard]] bool hasBorder() const noexcept { return border != Border::NONE; }
+            void setBackColor(Color color) { backColor = color; }
 
         private:
 
@@ -47,10 +58,13 @@ namespace TUI {
 
             Vec2<u32> size;
 
-            Border border = Border::NONE;
+            Border borderTop;
+            Border borderBottom;
+            Border borderLeft;
+            Border borderRight;
+
             BorderInset borderInset = BorderInset::HORIZONTAL;
 
-            Color borderColor = Color::BLACK;
             Color backColor   = Color::WHITE;
 
     };

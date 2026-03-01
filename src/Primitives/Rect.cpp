@@ -14,10 +14,7 @@ Rect::Rect(Vec2<s32> pos, Vec2<u32> size) :
 
 void Rect::draw(RenderBuffer& buffer) const {
 
-    if (hasBorder()) {
-
-        drawBorder(buffer);
-    }
+    drawBorder(buffer);
 
     fillin(buffer);
 }
@@ -25,43 +22,21 @@ void Rect::draw(RenderBuffer& buffer) const {
 
 void Rect::fillin(RenderBuffer& buffer) const {
 
-    const Vec2<s32> borderOffset = hasBorder() ? Vec2<s32>(1, 1) : Vec2<s32>(0, 0);
+    const s32 leftBorderOffset   = borderLeft.hasBorder()   ? 1 : 0;
+    const s32 rightBorderOffset  = borderRight.hasBorder()  ? 1 : 0;
+    const s32 topBorderOffset    = borderTop.hasBorder()    ? 1 : 0;
+    const s32 bottomBorderOffset = borderBottom.hasBorder() ? 1 : 0;
 
-    const Vec2<s32> pos = getPos() + borderOffset;
+    const s32 yStartPos = getPos().getY() + topBorderOffset;
+    const s32 yEndPos   = yStartPos + static_cast<s32>(size.getHeight()) - topBorderOffset - bottomBorderOffset;
 
-    /*
-    const Vec2<s32> pos = [&]() -> Vec2<s32> {
+    const s32 xStartPos = getPos().getX() + leftBorderOffset;
+    const s32 xEndPos   = xStartPos + static_cast<s32>(size.getWidth()) - leftBorderOffset - rightBorderOffset;
 
-        if (!hasBorder())
-            return getPos();
+    for (s32 y = yStartPos; y < yEndPos; y++) {
+        for (s32 x = xStartPos; x < xEndPos; x++) {
 
-        if (borderInset == BorderInset::HORIZONTAL)
-            return getPos() + Vec2<s32>(1, 0);
-        else
-            return getPos() + Vec2<s32>(0, 1);
-    }();
-
-    const Vec2<s32> endPos = [&]() -> Vec2<s32> {
-
-        if (!hasBorder())
-            return getPos() + static_cast<Vec2<s32>>(size);
-
-        if (borderInset == BorderInset::HORIZONTAL)
-            return getPos() + static_cast<Vec2<s32>>(size) + Vec2<s32>(0, -2);
-        else
-            return getPos() + static_cast<Vec2<s32>>(size) + Vec2<s32>(-2, 0);
-
-    }();
-    */
-
-    const Vec2<s32> endPos = pos +
-                             static_cast<Vec2<s32>>(size) -
-                             borderOffset * 2;
-
-    for (s32 y = pos.getY(); y < endPos.getY(); y++) {
-        for (s32 x = pos.getX(); x < endPos.getX(); x++) {
-
-            buffer.set(Vec2<s32>(x, y), { " ", borderColor, backColor});
+            buffer.set(Vec2<s32>(x, y), { " ", Color::BLACK, backColor});
         }
     }
 }
@@ -85,61 +60,88 @@ void Rect::drawBorder(RenderBuffer& buffer) const {
         " ", "▎", "▌", "▊"
     };
 
-    const u8 eleIndex = static_cast<u8>(border);
-
     const Vec2<s32> topBorderStartPos = getPos() + (horizontalInset() ? Vec2<s32>(0, 0) : Vec2<s32>(1, 0));
     const u32 horizontalBorderLength = size.getX() - (horizontalInset() ? 0 : 2);
 
-    Line topBorder(topBorderStartPos,
-                   horizontalBorderLength,
-                   horizontalInset() ?
-                       horizontalElements1.at(eleIndex) :
-                       horizontalElements2.at(eleIndex),
-                   Line::Mode::HORIZONTAL);
-    topBorder.setFrontColor(horizontalInset() ? borderColor : backColor);
-    topBorder.setBackColor(horizontalInset() ? Color::TRANSP : borderColor);
+    if (borderTop.hasBorder()){
 
-    topBorder.draw(buffer);
+        const u8 eleIndex = static_cast<u8>(borderTop.style);
 
-    const Vec2<s32> bottomBorderStartPos = topBorderStartPos + Vec2<s32>(0, static_cast<s32>(size.getHeight()) - 1);
+        Line topBorder(topBorderStartPos,
+                       horizontalBorderLength,
+                       horizontalInset() ?
+                           horizontalElements1.at(eleIndex) :
+                           horizontalElements2.at(eleIndex),
+                       Line::Mode::HORIZONTAL);
+        topBorder.setFrontColor(horizontalInset() ? borderTop.color : backColor);
+        topBorder.setBackColor(horizontalInset() ? Color::TRANSP : borderTop.color);
 
-    Line bottomBorder(bottomBorderStartPos,
-                      horizontalBorderLength,
-                      horizontalInset() ?
-                          horizontalElements2.at(eleIndex) :
-                          horizontalElements1.at(eleIndex),
-                      Line::Mode::HORIZONTAL);
-    bottomBorder.setFrontColor(borderColor);
-    bottomBorder.setBackColor(horizontalInset() ? Color::TRANSP : backColor);
-    bottomBorder.setInversion(horizontalInset());
+        topBorder.draw(buffer);
+    }
 
-    bottomBorder.draw(buffer);
+    if (borderBottom.hasBorder()) {
+
+        const u8 eleIndex = static_cast<u8>(borderBottom.style);
+
+        const Vec2<s32> bottomBorderStartPos = topBorderStartPos + Vec2<s32>(0, static_cast<s32>(size.getHeight()) - 1);
+
+        Line bottomBorder(bottomBorderStartPos,
+                          horizontalBorderLength,
+                          horizontalInset() ?
+                              horizontalElements2.at(eleIndex) :
+                              horizontalElements1.at(eleIndex),
+                          Line::Mode::HORIZONTAL);
+        bottomBorder.setFrontColor(borderBottom.color);
+        bottomBorder.setBackColor(horizontalInset() ? Color::TRANSP : backColor);
+        bottomBorder.setInversion(horizontalInset());
+
+        bottomBorder.draw(buffer);
+    }
 
     const Vec2<s32> leftBorderStartPos = getPos() + (horizontalInset() ? Vec2<s32>(0, 1) : Vec2<s32>(0, 0));
     const u32 verticalBorderLength = size.getY() - (horizontalInset() ? 2 : 0);
 
-    Line leftBorder(leftBorderStartPos,
-                    verticalBorderLength,
-                    horizontalInset() ?
-                        verticalElements1.at(eleIndex) :
-                        verticalElements2.at(eleIndex),
-                    Line::Mode::VERTICAL);
-    leftBorder.setFrontColor(borderColor);
-    leftBorder.setBackColor(horizontalInset() ? backColor : Color::TRANSP);
-    leftBorder.setInversion(!horizontalInset());
+    if (borderLeft.hasBorder()) {
 
-    leftBorder.draw(buffer);
+        const u8 eleIndex = static_cast<u8>(borderLeft.style);
 
-    const Vec2<s32> rightBorderStartPos = leftBorderStartPos + Vec2<s32>(static_cast<s32>(size.getWidth()) - 1, 0);
+        Line leftBorder(leftBorderStartPos,
+                        verticalBorderLength,
+                        horizontalInset() ?
+                            verticalElements1.at(eleIndex) :
+                            verticalElements2.at(eleIndex),
+                        Line::Mode::VERTICAL);
+        leftBorder.setFrontColor(borderLeft.color);
+        leftBorder.setBackColor(horizontalInset() ? backColor : Color::TRANSP);
+        leftBorder.setInversion(!horizontalInset());
 
-    Line rightBorder(rightBorderStartPos,
-                     verticalBorderLength,
-                     horizontalInset() ?
-                        verticalElements2.at(eleIndex) :
-                        verticalElements1.at(eleIndex),
-                    Line::Mode::VERTICAL);
-    rightBorder.setFrontColor(horizontalInset() ? backColor : borderColor);
-    rightBorder.setBackColor(horizontalInset() ? borderColor : Color::TRANSP);
+        leftBorder.draw(buffer);
+    }
 
-    rightBorder.draw(buffer);
+    if (borderRight.hasBorder()) {
+
+        const u8 eleIndex = static_cast<u8>(borderRight.style);
+
+        const Vec2<s32> rightBorderStartPos = leftBorderStartPos + Vec2<s32>(static_cast<s32>(size.getWidth()) - 1, 0);
+
+        Line rightBorder(rightBorderStartPos,
+                         verticalBorderLength,
+                         horizontalInset() ?
+                            verticalElements2.at(eleIndex) :
+                            verticalElements1.at(eleIndex),
+                        Line::Mode::VERTICAL);
+        rightBorder.setFrontColor(horizontalInset() ? backColor : borderRight.color);
+        rightBorder.setBackColor(horizontalInset() ? borderRight.color : Color::TRANSP);
+
+        rightBorder.draw(buffer);
+    }
+}
+
+
+void Rect::setBorder(const Border& border) {
+
+    borderTop    = border;
+    borderBottom = border;
+    borderLeft   = border;
+    borderRight  = border;
 }
