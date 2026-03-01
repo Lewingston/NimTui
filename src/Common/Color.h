@@ -16,6 +16,7 @@ namespace TUI {
             static const Color YELLOW;
             static const Color ORANGE;
             static const Color PURPLE;
+            static const Color GRAY;
 
             constexpr Color(u8 r, u8 g, u8 b) :
                 r(r), g(g), b(b) {}
