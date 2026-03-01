@@ -54,6 +54,9 @@ end)
 -- Generate coverage report
 vim.keymap.set("n", "<F8>", function()
 
-    runInMingw(buildTest .. ' && cmake --build ./build --target coverage && explorer build/coverage/coverage.html')
+    local createCoverageReport = 'cmake --build ./build --target coverage'
+    local openReport = 'explorer build\\coverage\\coverage.html'
+
+    runInConsole(mingw .. ' "' .. buildTest .. ' && ' .. createCoverageReport .. '" && ' .. openReport)
 
 end)
