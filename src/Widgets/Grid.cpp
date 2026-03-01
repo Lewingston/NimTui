@@ -61,8 +61,10 @@ void Grid::drawNumbers(RenderBuffer& buffer, Vec2<s32> offset) {
 
     const Vec2<s32> gridOffset = getGridOffset();
 
-    const u32 countX = getSize().getWidth() / gridSize.getWidth();
-    const u32 countY = getSize().getHeight() / gridSize.getHeight();
+    const u32 additionalNumber = this->offset ? 0 : 1;
+
+    const u32 countX = (getSize().getWidth() / gridSize.getWidth()) + additionalNumber;
+    const u32 countY = (getSize().getHeight() / gridSize.getHeight()) + additionalNumber;
 
     for (s32 y = 0; y < static_cast<s32>(countY); y++) {
         for (s32 x = 0; x < static_cast<s32>(countX); x++) {
