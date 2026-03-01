@@ -29,7 +29,7 @@ namespace TUI {
                 Border::Style style = Style::NONE;
                 Color color  = Color::BLACK;
 
-                [[nodiscard]] bool hasBorder() const noexcept { return style != Style::NONE; }
+                [[nodiscard]] bool hasBorder() const noexcept { return style != NONE; }
             };
 
             Rect(Vec2<s32> pos, Vec2<u32> size);
@@ -42,7 +42,7 @@ namespace TUI {
             void setBorderTop(const Border& border) { borderTop = border; }
             void setBorderLeft(const Border& border) { borderLeft = border; }
             void setBorderRight(const Border& border) { borderRight = border; }
-            void setBorderBottom(const Border& border) { borderBottom = border; }
+            void setBorderBottom(const Border& border) { borderRight = border; }
 
             void setBorderInset(BorderInset inset) { borderInset = inset; }
 
