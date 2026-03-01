@@ -107,7 +107,16 @@ void Grid::enableNumbers(bool enable) {
 }
 
 
+void Grid::enableOffset(bool enable) {
+
+    offset = enable;
+}
+
+
 Vec2<s32> Grid::getGridOffset() const {
+
+    if (!offset)
+        return { 0, 0};
 
     const s32 gridWidth = static_cast<s32>(gridSize.getWidth());
     const s32 gridHeight = static_cast<s32>(gridSize.getHeight());

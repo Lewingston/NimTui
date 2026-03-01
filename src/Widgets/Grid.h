@@ -23,6 +23,8 @@ namespace TUI {
 
             void enableNumbers(bool enable);
 
+            void enableOffset(bool enable);
+
         private:
 
             void drawGrid(RenderBuffer& buffer, Vec2<s32> offset);
@@ -35,6 +37,7 @@ namespace TUI {
             Vec2<u32> gridSize { 16, 8 };
 
             bool showNumbers = false;
+            bool offset = true;
 
             Color color1 = Color::WHITE;
             Color color2 = Color::BLACK;
