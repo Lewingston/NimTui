@@ -41,13 +41,22 @@ namespace TUI {
             void moveCursorToFirstElement();
             void moveCursorToLastElement();
 
-        private:
+        protected:
 
-            void drawListElements(RenderBuffer& buffer, Vec2<s32> offset);
-            void drawListElement(const std::string& entry,
-                                 bool selected,
-                                 RenderBuffer& buffer,
-                                 Vec2<s32> offset);
+            virtual void drawListElements(RenderBuffer& buffer, Vec2<s32> offset);
+
+            virtual void drawListElement(u32           index,
+                                         RenderBuffer& buffer,
+                                         Vec2<s32>     offset);
+
+            virtual void drawListElement(const std::string& entry,
+                                         bool               selected,
+                                         RenderBuffer&      buffer,
+                                         Vec2<s32>          offset);
+
+            [[nodiscard]] u32 getScrollPosition() const noexcept { return scrollPosition; }
+
+        private:
 
             [[nodiscard]] u32 modifyCursorPosition(s32 steps) const;
             void scrollList(s32 steps);

@@ -23,27 +23,33 @@ void ListView::draw(RenderBuffer& buffer, Vec2<s32> offset) {
 
 
 void ListView::drawListElements(RenderBuffer& buffer,
-                                Vec2<s32> offset) {
+                                Vec2<s32>     offset) {
 
     const u32 startIndex = scrollPosition;
     const u32 endIndex = std::min(startIndex + getSize().getHeight(), static_cast<u32>(elements.size()));
 
     for (u32 index = startIndex; index < endIndex; index++) {
 
-        const bool selected = index == selectedElementIndex;
-        const std::string& entry = elements.at(index);
-
-        const s32 yOffset = static_cast<s32>(index) - static_cast<s32>(scrollPosition);
-
-        drawListElement(entry, selected, buffer, offset + Vec2<s32>(0, yOffset));
+        drawListElement(index, buffer, offset);
     }
 }
 
 
+void ListView::drawListElement(u32 index, RenderBuffer& buffer, Vec2<s32> offset) {
+
+    const bool selected = index == selectedElementIndex;
+    const std::string& entry = elements.at(index);
+
+    const s32 yOffset = static_cast<s32>(index) - static_cast<s32>(scrollPosition);
+
+    drawListElement(entry, selected, buffer, offset + Vec2<s32>(0, yOffset));
+}
+
+
 void ListView::drawListElement(const std::string& entry,
-                               bool selected,
-                               RenderBuffer& buffer,
-                               Vec2<s32> offset)
+                               bool               selected,
+                               RenderBuffer&      buffer,
+                               Vec2<s32>          offset)
 {
 
     const std::string str = ConsoleString::getSubstring(entry, 0, getSize().getWidth());
