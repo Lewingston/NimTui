@@ -72,19 +72,6 @@ void FileBrowser::update(const std::filesystem::path& path) {
     const auto parentDirEntries = buildParentDirEntries(path);
     fileEntries.insert(fileEntries.end(), parentDirEntries.rbegin(), parentDirEntries.rend());
 
-    /*
-    for (auto [index, dir] : std::views::enumerate(path)) {
-        if (!dir.string().empty() && dir.string() != "/") {
-
-            if (index == 0) {
-                fileEntries.emplace_back(dir, index, DirEntryType::DRIVE, FileType::NOT_A_FILE, currentDrive);
-            } else {
-                fileEntries.emplace_back(dir, index, DirEntryType::DIR);
-            }
-        }
-    }
-    */
-
     currentDirDepth = static_cast<u32>(fileEntries.size());
 
     const auto entries = getDirectoryEntries(path);
