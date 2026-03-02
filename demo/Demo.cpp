@@ -17,6 +17,7 @@ Demo::Demo() :
     setupDemoMenu(widgetsMenu);
 
     setupDemoPage(rectDemo);
+    setupDemoPage(imageBrowser);
 }
 
 
@@ -122,6 +123,8 @@ void Demo::demoSelected(const std::string& demo) {
             currentDemoPage = primitivesMenu;
         } else if (demo == "Widgets") {
             currentDemoPage = widgetsMenu;
+        } else if (demo == "Image Browser") {
+            currentDemoPage = imageBrowser;
         }
 
     } else if (&currentDemoPage.get() == &primitivesMenu) {

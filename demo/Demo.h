@@ -4,6 +4,7 @@
 #include "DemoPage.h"
 #include "Console/ConsoleWindow.h"
 #include "Primitives/RectDemo.h"
+#include "ImageBrowserDemo/ImageBrowser.h"
 
 namespace TUI {
 
@@ -55,6 +56,8 @@ namespace TUI {
             });
 
             RectDemo rectDemo = RectDemo({0, 0}, window.getSize());
+
+            ImageBrowser imageBrowser = ImageBrowser({0, 0}, window.getSize());
 
             std::reference_wrapper<DemoPage> currentDemoPage;
 
