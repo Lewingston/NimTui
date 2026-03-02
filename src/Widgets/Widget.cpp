@@ -1,7 +1,6 @@
 
 #include "Widget.h"
 #include "Primitives/Rect.h"
-#include "Console/RenderBuffer.h"
 
 using namespace TUI;
 
