@@ -27,8 +27,8 @@ void Grid::drawGrid(RenderBuffer& buffer, Vec2<s32> offset) {
     for (s32 y = 0; y < static_cast<s32>(getSize().getHeight()); y++) {
         for (s32 x = 0; x < static_cast<s32>(getSize().getWidth()); x++) {
 
-            const s32 posX = x + offset.getX();
-            const s32 posY = y + offset.getY();
+            const s32 posX = x + offset.getX() + getPos().getX();
+            const s32 posY = y + offset.getY() + getPos().getY();
 
             const Vec2<u32> pos = { static_cast<u32>(posX), static_cast<u32>(posY) };
 
@@ -72,7 +72,6 @@ void Grid::drawNumbers(RenderBuffer& buffer, Vec2<s32> offset) {
             const s32 posX = gridOffset.getX() + (x * static_cast<s32>(gridSize.getWidth())) + offset.getX();
             const s32 posY = gridOffset.getY() + (y * static_cast<s32>(gridSize.getHeight())) + offset.getY();
 
-            //const std::string str = std::to_string(x) + std::to_string(y);
             const std::string str = getGridText(x, y);
             Text text = Text(str, {posX, posY});
             text.setFrontColor(textColor);
