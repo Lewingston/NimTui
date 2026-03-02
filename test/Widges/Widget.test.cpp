@@ -134,4 +134,77 @@ TEST(Widget, draw) {
             }
         }
     }
+
+    { // draw widget of size 0
+
+        constexpr u8 bufferWidth = 6;
+        constexpr u8 bufferHeight = 6;
+
+        RenderBuffer buffer({bufferWidth, bufferHeight});
+        Widget widget({2, 3}, {0, 0});
+        widget.setBackColor(g);
+
+        widget.draw(buffer, {0, 0});
+
+        const std::array<std::array<Color, bufferWidth>, bufferHeight> ref =
+        {{
+             { w, w, w, w, w, w },
+             { w, w, w, w, w, w },
+             { w, w, w, w, w, w },
+             { w, w, w, w, w, w },
+             { w, w, w, w, w, w },
+             { w, w, w, w, w, w }
+        }};
+
+        for (u8 y = 0; y < buffer.getSize().getHeight(); y++) {
+            for (u8 x = 0; x < buffer.getSize().getWidth(); x++) {
+
+                const Color bc = buffer.get({x, y}).backColor;
+                const Color rc = ref[y][x];
+                ASSERT_EQ(bc, rc);
+            }
+        }
+    }
+}
+
+
+TEST(Widget, handleKeyEvent) {
+
+    Widget widget({1, 1}, {5, 5});
+
+    { // ESC Pressed
+
+        Console::KeyEvent event;
+        event.pressed = true;
+        event.keyCode = KeyCode::ESC;
+
+        ASSERT_FALSE(widget.handleKeyEvent(event));
+    }
+
+    { // ESC Release
+
+        Console::KeyEvent event;
+        event.pressed = false;
+        event.keyCode = KeyCode::ESC;
+
+        ASSERT_FALSE(widget.handleKeyEvent(event));
+    }
+
+    { // Enter pressed
+
+        Console::KeyEvent event;
+        event.pressed = true;
+        event.keyCode = KeyCode::ENTER;
+
+        ASSERT_FALSE(widget.handleKeyEvent(event));
+    }
+
+    { // x pressed
+
+        Console::KeyEvent event;
+        event.pressed = true;
+        event.keyCode = KeyCode::X;
+
+        ASSERT_FALSE(widget.handleKeyEvent(event));
+    }
 }

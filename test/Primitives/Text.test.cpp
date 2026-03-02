@@ -20,11 +20,11 @@ TEST(Text, ASCII_Text) {
 
     text.draw(buffer);
 
-    ASSERT_TRUE(CompareCharData(buffer.get({0, 0}), CharData("a")));
-    ASSERT_TRUE(CompareCharData(buffer.get({1, 0}), CharData("b")));
-    ASSERT_TRUE(CompareCharData(buffer.get({2, 0}), CharData("c")));
-    ASSERT_TRUE(CompareCharData(buffer.get({3, 0}), CharData("d")));
-    ASSERT_TRUE(CompareCharData(buffer.get({4, 0}), CharData("e")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({0, 0}), CharData("a")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({1, 0}), CharData("b")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({2, 0}), CharData("c")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({3, 0}), CharData("d")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({4, 0}), CharData("e")));
 }
 
 
@@ -38,13 +38,13 @@ TEST(Text, Umlaute) {
 
     text.draw(buffer);
 
-    ASSERT_TRUE(CompareCharData(buffer.get({0, 0}), CharData("a")));
-    ASSERT_TRUE(CompareCharData(buffer.get({1, 0}), CharData("b")));
-    ASSERT_TRUE(CompareCharData(buffer.get({2, 0}), CharData("ü")));
-    ASSERT_TRUE(CompareCharData(buffer.get({3, 0}), CharData("ä")));
-    ASSERT_TRUE(CompareCharData(buffer.get({4, 0}), CharData("ö")));
-    ASSERT_TRUE(CompareCharData(buffer.get({5, 0}), CharData("g")));
-    ASSERT_TRUE(CompareCharData(buffer.get({6, 0}), CharData("h")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({0, 0}), CharData("a")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({1, 0}), CharData("b")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({2, 0}), CharData("ü")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({3, 0}), CharData("ä")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({4, 0}), CharData("ö")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({5, 0}), CharData("g")));
+    ASSERT_TRUE(TestUtils::CompareCharData(buffer.get({6, 0}), CharData("h")));
 }
 
 

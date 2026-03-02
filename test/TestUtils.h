@@ -6,14 +6,19 @@
 
 namespace TUI {
 
-    using CharData = RenderBuffer::CharData;
+    class TestUtils {
 
-    [[nodiscard]] bool CompareCharData(const CharData& c1, const CharData& c2) {
+        public:
 
-        EXPECT_EQ(c1.grapheme.getStr(), c2.grapheme.getStr());
-        EXPECT_EQ(c1.frontColor, c2.frontColor);
-        EXPECT_EQ(c1.backColor,  c2.backColor);
+            using CharData = RenderBuffer::CharData;
 
-        return c1 == c2;
-    }
+            [[nodiscard]] static bool CompareCharData(const CharData& c1, const CharData& c2) {
+
+                EXPECT_EQ(c1.grapheme.getStr(), c2.grapheme.getStr());
+                EXPECT_EQ(c1.frontColor, c2.frontColor);
+                EXPECT_EQ(c1.backColor,  c2.backColor);
+
+                return c1 == c2;
+            }
+    };
 }
