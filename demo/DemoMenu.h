@@ -1,0 +1,45 @@
+#pragma once
+
+#include "Widgets/Widget.h"
+#include "Widgets/SelectionMenu.h"
+#include "Console/Console.h"
+
+#include <functional>
+
+namespace TUI {
+
+    class DemoMenu : public Widget {
+
+        public:
+
+            DemoMenu(Vec2<s32> pos,
+                     Vec2<u32> size,
+                     const std::vector<std::string>& elements);
+
+            virtual ~DemoMenu() = default;
+
+            void draw(RenderBuffer& buffer, Vec2<s32> offset) override;
+
+            void onSelection(const std::function<void(const std::string&)>& callback);
+            void onLeave(const std::function<void()>& callback);
+
+            void handleKeyEvent(Console::KeyEvent keyEvent) override;
+
+        private:
+
+            void onResize(Vec2<u32> oldSize, Vec2<u32> newSize) override;
+
+            void setMenu();
+
+            void moveCursor(s32 steps);
+
+            void selectItem();
+
+            void leaveMenu();
+
+            SelectionMenu menu = SelectionMenu({0, 0}, {0, 0});
+
+            std::function<void(const std::string&)> onSelectionCallback;
+            std::function<void()> onLeaveCallback;
+    };
+}
