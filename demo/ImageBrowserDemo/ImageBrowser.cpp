@@ -11,6 +11,7 @@ ImageBrowser::ImageBrowser(Vec2<s32> pos, Vec2<u32> size) :
     DemoPage(pos, size) 
 {
     setupFileBrowser();
+    grid.enableOffset(false);
 }
 
 
