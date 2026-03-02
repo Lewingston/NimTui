@@ -34,7 +34,7 @@ namespace TUI {
 
             [[nodiscard]] std::string getGridText(s32 x , s32 y) const;
 
-            Vec2<u32> gridSize { 16, 8 };
+            Vec2<u32> gridSize { 24, 12 };
 
             bool showNumbers = false;
             bool offset = true;
