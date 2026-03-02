@@ -15,6 +15,8 @@ Demo::Demo() :
     setupDemoMenu(demoMenu);
     setupDemoMenu(primitivesMenu);
     setupDemoMenu(widgetsMenu);
+
+    setupDemoPage(rectDemo);
 }
 
 
@@ -42,6 +44,15 @@ void Demo::setupDemoMenu(DemoMenu& menu) {
     menu.onSelection([&](const std::string& item) {
 
         demoSelected(item);
+    });
+}
+
+
+void Demo::setupDemoPage(DemoPage& page) {
+
+    page.onLeave([&]() {
+
+        leaveDemoPage();
     });
 }
 
@@ -92,7 +103,11 @@ void Demo::leaveDemoPage() {
 
     } else {
 
-        currentDemoPage = demoMenu;
+        if (&currentDemoPage.get() == &rectDemo) {
+            currentDemoPage = primitivesMenu;
+        } else {
+            currentDemoPage = demoMenu;
+        }
 
         currentDemoPage.get().setSize(window.getSize());
     }
@@ -109,6 +124,19 @@ void Demo::demoSelected(const std::string& demo) {
             currentDemoPage = widgetsMenu;
         }
 
-        currentDemoPage.get().setSize(window.getSize());
+    } else if (&currentDemoPage.get() == &primitivesMenu) {
+
+        if (demo == "Line") {
+
+        } else if (demo == "Rect") {
+            currentDemoPage = rectDemo;
+        } else if (demo == "Text") {
+
+        }
+
+    } else if (&currentDemoPage.get() == &widgetsMenu) {
+
     }
+
+    currentDemoPage.get().setSize(window.getSize());
 }

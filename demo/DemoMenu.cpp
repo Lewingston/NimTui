@@ -10,9 +10,9 @@ using namespace TUI;
 DemoMenu::DemoMenu(Vec2<s32> pos,
                    Vec2<u32> size,
                    const std::vector<std::string>& elements) :
-    Widget(pos, size)
+    DemoPage(pos, size)
 {
-    setBackColor(DEMO_STYLE.backgroundColor);
+    setBackColor(DEMO_STYLE.primaryBackColor);
 
     setMenu();
 
@@ -43,12 +43,6 @@ void DemoMenu::onSelection(const std::function<void(const std::string&)>& callba
 }
 
 
-void DemoMenu::onLeave(const std::function<void()>& callback) {
-
-    onLeaveCallback = callback;
-}
-
-
 void DemoMenu::setMenu() {
 
     const u32 width = std::min(35u, getSize().getWidth() / 3);
@@ -65,34 +59,33 @@ void DemoMenu::setMenu() {
 }
 
 
-void DemoMenu::handleKeyEvent(Console::KeyEvent keyEvent) {
+bool DemoMenu::handleKeyEvent(Console::KeyEvent keyEvent) {
+
+    if (DemoPage::handleKeyEvent(keyEvent))
+        return true;
 
     if (!keyEvent.pressed)
-        return;
+        return false;
 
     switch (keyEvent.keyCode) {
 
         case KeyCode::J:
         case KeyCode::DOWN: {
             moveCursor(1);
-            break;
+            return true;
         }
         case KeyCode::K:
         case KeyCode::UP: {
             moveCursor(-1);
-            break;
+            return true;
         }
         case KeyCode::ENTER:
         case KeyCode::O: {
             selectItem();
-            break;
-        }
-        case KeyCode::ESC: {
-            leaveMenu();
-            break;
+            return true;
         }
         default: {
-            break;
+            return false;
         }
     }
 }
@@ -108,11 +101,4 @@ void DemoMenu::selectItem() {
 
     if (onSelectionCallback)
         onSelectionCallback(menu.getSelectedElement());
-}
-
-
-void DemoMenu::leaveMenu() {
-
-    if (onLeaveCallback)
-        onLeaveCallback();
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Widgets/Widget.h"
+#include "DemoPage.h"
 #include "Widgets/SelectionMenu.h"
 #include "Console/Console.h"
 
@@ -8,7 +8,7 @@
 
 namespace TUI {
 
-    class DemoMenu : public Widget {
+    class DemoMenu : public DemoPage {
 
         public:
 
@@ -21,9 +21,8 @@ namespace TUI {
             void draw(RenderBuffer& buffer, Vec2<s32> offset) override;
 
             void onSelection(const std::function<void(const std::string&)>& callback);
-            void onLeave(const std::function<void()>& callback);
 
-            void handleKeyEvent(Console::KeyEvent keyEvent) override;
+            bool handleKeyEvent(Console::KeyEvent keyEvent) override;
 
         private:
 
@@ -34,8 +33,6 @@ namespace TUI {
             void moveCursor(s32 steps);
 
             void selectItem();
-
-            void leaveMenu();
 
             SelectionMenu menu = SelectionMenu({0, 0}, {0, 0});
 

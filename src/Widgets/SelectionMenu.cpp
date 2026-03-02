@@ -47,18 +47,18 @@ void SelectionMenu::drawElement(const std::string& element,
                                 bool               selected) {
 
     Rect rect(offset, {getSize().getWidth(), elementHeight});
-    rect.setBackColor(style.backgroundColor);
-    rect.setBorder({Rect::Border::MEDIUM, style.borderElementColor});
+    rect.setBackColor(style.primaryBackColor);
+    rect.setBorder({Rect::Border::MEDIUM, style.borderColor});
     rect.setBorderInset(Rect::BorderInset::VERTICAL);
 
     if (index != 0) {
 
-        rect.setBorderTop({Rect::Border::THIN, style.borderElementColor});
+        rect.setBorderTop({Rect::Border::THIN, style.borderColor});
     }
 
     if (index != elements.size() - 1) {
 
-        rect.setBorderBottom({Rect::Border::THIN, style.borderElementColor});
+        rect.setBorderBottom({Rect::Border::THIN, style.borderColor});
     }
 
     rect.draw(buffer);

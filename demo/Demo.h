@@ -1,7 +1,9 @@
 #pragma once
 
 #include "DemoMenu.h"
+#include "DemoPage.h"
 #include "Console/ConsoleWindow.h"
+#include "Primitives/RectDemo.h"
 
 namespace TUI {
 
@@ -17,6 +19,7 @@ namespace TUI {
 
             void setupWindow();
             void setupDemoMenu(DemoMenu& menu);
+            void setupDemoPage(DemoPage& page);
 
             void draw();
 
@@ -47,10 +50,13 @@ namespace TUI {
 
             DemoMenu widgetsMenu = DemoMenu({0, 0}, window.getSize(), {
                 "Buttons",
-                "TextBox"
+                "TextBox",
+                "ListView"
             });
 
-            std::reference_wrapper<Widget> currentDemoPage;
+            RectDemo rectDemo = RectDemo({0, 0}, window.getSize());
+
+            std::reference_wrapper<DemoPage> currentDemoPage;
 
             bool terminate = false;
 

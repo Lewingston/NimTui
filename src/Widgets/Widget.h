@@ -28,7 +28,7 @@ namespace TUI {
 
             virtual void draw(RenderBuffer& buffer, Vec2<s32> offset);
 
-            virtual void handleKeyEvent(Console::KeyEvent keyEvent);
+            virtual bool handleKeyEvent(Console::KeyEvent keyEvent);
 
         protected:
 

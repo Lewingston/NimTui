@@ -51,6 +51,7 @@ void Widget::onResize(Vec2<u32>, Vec2<u32>) {
 }
 
 
-void Widget::handleKeyEvent(Console::KeyEvent) {
+bool Widget::handleKeyEvent(Console::KeyEvent) {
 
+    return false;
 }

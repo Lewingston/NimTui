@@ -20,15 +20,17 @@ namespace TUI {
             Selected selected;
         };
 
-        Color backgroundColor;
-        Color borderElementColor;
+        Color primaryBackColor;
+        Color secondaryBackColor;
+        Color borderColor;
         Text text;
     };
 
     static constexpr Style DEFAULT_STYLE = {
 
-        .backgroundColor         = Color(255, 255, 255),
-        .borderElementColor      = Color(0, 0, 0),
+        .primaryBackColor        = Color(255, 255, 255),
+        .secondaryBackColor      = Color(32, 32, 32),
+        .borderColor             = Color(0, 0, 0),
         .text = {
             .color               = Color(0, 0, 0),
             .backgroundColor     = Color(255, 255, 255),
