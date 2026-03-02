@@ -3,128 +3,201 @@
 
 #include <filesystem>
 
+#include <ranges>
+
 #include <windows.h>
 
 using namespace TUI;
 
 
 FileBrowser::FileBrowser(Vec2<s32> pos, Vec2<u32> size) :
-    ListView(pos, size) {
+    ListView(pos, size),
+    fileEntries(getRootDirectories())
+{
 
-    addElements(getRootDirectories());
+    updateListViewElements();
 }
 
 
-std::string FileBrowser::enter() {
+FileBrowser::FileTreeEntry FileBrowser::enter() {
 
-    const std::string path = getCurrentSelectedPath();
-    const std::filesystem::path fsPath = path;
+    const FileTreeEntry entry = getCurrentSelectedElement();
 
-    if (std::filesystem::is_directory(fsPath))
-        update(path);
+    if (std::filesystem::is_directory(entry.path)) {
 
-    return path;
+        if (entry.entryType == DirEntryType::DRIVE)
+            currentDrive = entry.driveLetter;
+
+        update(entry.path);
+    }
+
+    return entry;
 }
 
 
-std::string FileBrowser::leave() {
+FileBrowser::FileTreeEntry FileBrowser::leave() {
 
     if (currentDirDepth == 0)
-        return getCurrentSelectedPath();
+        return getCurrentSelectedElement();
 
     currentDirDepth -= 1;
     if (currentDirDepth == 0) {
 
-        removeAllElements();
-        addElements(getRootDirectories());
-        return "";
+        fileEntries = getRootDirectories();
+
+        updateListViewElements();
+
+        return getCurrentSelectedElement();
 
     } else {
 
         update(getCurrentPath());
 
-        return getCurrentPath();
+        return getCurrentSelectedElement();
     }
 }
 
 
-void FileBrowser::update(const std::string& path) {
+void FileBrowser::update(const std::filesystem::path& path) {
 
-    const std::filesystem::path fsPath(path);
-
-    if (!std::filesystem::exists(fsPath))
+    if (!std::filesystem::exists(path))
         return;
 
-    if (!std::filesystem::is_directory(fsPath)) {
+    if (!std::filesystem::is_directory(path)) {
 
     }
 
-    std::vector<std::string> list;
+    fileEntries.clear();
 
-    for (const auto& dir : fsPath) {
-        if (!dir.string().empty() && dir.string() != "/")
-            list.push_back(dir.string() + "/");
+    const auto parentDirEntries = buildParentDirEntries(path);
+    fileEntries.insert(fileEntries.end(), parentDirEntries.rbegin(), parentDirEntries.rend());
+
+    /*
+    for (auto [index, dir] : std::views::enumerate(path)) {
+        if (!dir.string().empty() && dir.string() != "/") {
+
+            if (index == 0) {
+                fileEntries.emplace_back(dir, index, DirEntryType::DRIVE, FileType::NOT_A_FILE, currentDrive);
+            } else {
+                fileEntries.emplace_back(dir, index, DirEntryType::DIR);
+            }
+        }
     }
+    */
 
-    currentDirDepth = static_cast<u32>(list.size());
+    currentDirDepth = static_cast<u32>(fileEntries.size());
 
-    const std::vector<std::string> entries = getDirectoryEntries(path);
-    list.insert(list.end(), entries.begin(), entries.end());
+    const auto entries = getDirectoryEntries(path);
+    fileEntries.insert(fileEntries.end(), entries.begin(), entries.end());
 
-    removeAllElements();
-    addElements(list);
+    updateListViewElements();
 }
 
 
-std::vector<std::string> FileBrowser::getRootDirectories() const {
+std::vector<FileBrowser::FileTreeEntry> FileBrowser::buildParentDirEntries(const std::filesystem::path& path) const {
 
-    std::vector<std::string> driveNames;
+    std::vector<FileTreeEntry> result;
+
+    u32 depth = getDirectoryDepth(path);
+    std::filesystem::path parentDirs = path;
+    while (!parentDirs.empty()) {
+
+        auto newDirs = parentDirs.parent_path();
+        if (parentDirs == newDirs) {
+            result.emplace_back(parentDirs, depth, DirEntryType::DRIVE, FileType::NOT_A_FILE, currentDrive);
+            break;
+        }
+
+        result.emplace_back(parentDirs, depth, DirEntryType::DIR);
+
+        parentDirs = newDirs;
+        depth--;
+    }
+
+    return result;
+}
+
+
+std::string FileBrowser::buildEntryName(const FileTreeEntry& entry) const {
+
+    if (entry.entryType == DirEntryType::DRIVE) {
+        return std::string(1, entry.driveLetter) + ":/";
+    } else {
+        return std::string(entry.level, ' ') + entry.path.filename().string();
+    }
+}
+
+
+void FileBrowser::updateListViewElements() {
+
+    removeAllElements();
+
+    for (const auto& entry : fileEntries) {
+        addElement(buildEntryName(entry));
+    }
+}
+
+
+std::vector<FileBrowser::FileTreeEntry> FileBrowser::getRootDirectories() const {
+
+    std::vector<FileTreeEntry> rootEntries;
 
     DWORD drives = GetLogicalDrives();
     for (char letter = 'A'; letter <= 'Z'; letter++) {
 
         if (drives & (1 << (letter - 'A'))) {
             const std::string driveName = std::string(1, letter) + ":/";
-            driveNames.push_back(driveName);
+            rootEntries.emplace_back(driveName,
+                                     0,
+                                     DirEntryType::DRIVE,
+                                     FileType::NOT_A_FILE,
+                                     letter);
         }
     }
 
-    return driveNames;
+    return rootEntries;
 }
 
 
-std::vector<std::string> FileBrowser::getDirectoryEntries(const std::string& path) const {
+std::vector<FileBrowser::FileTreeEntry> FileBrowser::getDirectoryEntries(const std::filesystem::path& path) const {
 
-    std::vector<std::string> entries;
+    std::vector<FileTreeEntry> entries;
 
-    const std::filesystem::path fsPath = path;
-    for (const auto& entry : std::filesystem::directory_iterator(fsPath)) {
+    for (const auto& entry : std::filesystem::directory_iterator(path)) {
 
-        entries.push_back(entry.path().filename().string());
+        entries.emplace_back(getFileTreeEntry(entry));
     }
 
     return entries;
 }
 
 
-std::string FileBrowser::getCurrentPath(u32 depthLimit) const {
+FileBrowser::FileTreeEntry FileBrowser::getFileTreeEntry(const std::filesystem::directory_entry& entry) const {
 
-    std::string path;
+    const auto& path = entry.path();
 
-    for (u32 ii = 0; ii < currentDirDepth && ii < depthLimit; ii++) {
-
-        path += getElementAt(ii);
-    }
-
-    return path;
+    return FileTreeEntry {
+        .path      = path,
+        .level     = getDirectoryDepth(path),
+        .entryType = DirEntryType::FILE,
+        .fileType  = FileType::NOT_A_FILE
+    };
 }
 
 
-std::string FileBrowser::getCurrentSelectedPath() const {
+u32 FileBrowser::getDirectoryDepth(const std::filesystem::path& path) const {
 
-    std::string path = getCurrentPath(getCursorPosition());
+    return static_cast<u32>(std::distance(path.begin(), path.end()) - 2);
+}
 
-    path += getSelectedElement();
 
-    return path;
+std::filesystem::path FileBrowser::getCurrentPath() const {
+
+    return fileEntries.at(currentDirDepth).path.parent_path();
+}
+
+
+const FileBrowser::FileTreeEntry& FileBrowser::getCurrentSelectedElement() const {
+
+    return fileEntries.at(getCursorPosition());
 }

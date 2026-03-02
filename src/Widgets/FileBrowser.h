@@ -3,6 +3,7 @@
 #include "ListView.h"
 
 #include <limits>
+#include <filesystem>
 
 namespace TUI {
 
@@ -10,22 +11,58 @@ namespace TUI {
 
         public:
 
+            enum class DirEntryType : u8 {
+
+                FILE,
+                DIR,
+                LINK,
+                DRIVE
+            };
+
+            enum class FileType : u8 {
+
+                NOT_A_FILE,
+                IMAGE,
+                FILE
+            };
+
+            struct FileTreeEntry {
+
+                std::filesystem::path path;
+                u32                   level = 0;
+                DirEntryType          entryType;
+                FileType              fileType = FileType::NOT_A_FILE;
+                char                  driveLetter = 0;
+            };
             FileBrowser(Vec2<s32> pos, Vec2<u32> size);
 
             virtual ~FileBrowser() = default;
 
-            std::string enter();
-            std::string leave();
+            FileTreeEntry enter();
+            FileTreeEntry leave();
 
         private:
 
-            void update(const std::string& path);
+            void update(const std::filesystem::path& path);
 
-            [[nodiscard]] std::vector<std::string> getRootDirectories() const;
-            [[nodiscard]] std::vector<std::string> getDirectoryEntries(const std::string& path) const;
-            [[nodiscard]] std::string getCurrentPath(u32 depthLimit = std::numeric_limits<u32>::max()) const;
-            [[nodiscard]] std::string getCurrentSelectedPath() const;
+            std::vector<FileTreeEntry> buildParentDirEntries(const std::filesystem::path& path) const;
+
+            [[nodiscard]] std::string buildEntryName(const FileTreeEntry& entry) const;
+
+            void updateListViewElements();
+
+            [[nodiscard]] std::vector<FileTreeEntry> getRootDirectories() const;
+            [[nodiscard]] std::vector<FileTreeEntry> getDirectoryEntries(const std::filesystem::path& path) const;
+            [[nodiscard]] FileTreeEntry getFileTreeEntry(const std::filesystem::directory_entry& entry) const;
+            [[nodiscard]] u32 getDirectoryDepth(const std::filesystem::path& path) const;
+
+            [[nodiscard]] std::filesystem::path getCurrentPath() const;
+            [[nodiscard]] const FileTreeEntry& getCurrentSelectedElement() const;
+
+            std::vector<FileTreeEntry> fileEntries;
 
             u32 currentDirDepth = 0;
+
+            char currentDrive = 0;
     };
 }
