@@ -3,6 +3,7 @@
 #include "Vec.h"
 #include "Types.h"
 #include "Color.h"
+#include "Console/Console.h"
 
 namespace TUI {
 
@@ -26,6 +27,12 @@ namespace TUI {
             [[nodiscard]] Color getBackColor() const noexcept { return backColor; }
 
             virtual void draw(RenderBuffer& buffer, Vec2<s32> offset);
+
+            virtual void handleKeyEvent(Console::KeyEvent keyEvent);
+
+        protected:
+
+            virtual void onResize(Vec2<u32> oldSize, Vec2<u32> newSize);
 
         private:
 

@@ -13,7 +13,10 @@ Widget::Widget(Vec2<s32> pos, Vec2<u32> size) :
 
 void Widget::setSize(Vec2<u32> size) {
 
+    const auto oldSize = this->size;
     this->size = size;
+
+    onResize(oldSize, size);
 }
 
 
@@ -40,4 +43,14 @@ void Widget::draw(RenderBuffer& buffer, Vec2<s32> offset) {
             });
         }
     }
+}
+
+
+void Widget::onResize(Vec2<u32>, Vec2<u32>) {
+
+}
+
+
+void Widget::handleKeyEvent(Console::KeyEvent) {
+
 }
