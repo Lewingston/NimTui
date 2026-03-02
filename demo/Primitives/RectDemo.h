@@ -13,6 +13,8 @@ namespace TUI {
 
             virtual ~RectDemo() = default;
 
+            void setStyle(const Style& style) override;
+
             void draw(RenderBuffer& renderBuffer, Vec2<s32> offset) override;
 
         private:

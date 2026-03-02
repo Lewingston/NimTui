@@ -1,6 +1,5 @@
 
 #include "RectDemo.h"
-#include "../DemoStyle.h"
 #include "Primitives/Rect.h"
 
 using namespace TUI;
@@ -13,11 +12,16 @@ RectDemo::RectDemo(Vec2<s32> pos, Vec2<u32> size) :
 }
 
 
+void RectDemo::setStyle(const Style& style) {
+
+    grid.setColors(style.primaryBackColor, style.secondaryBackColor);
+    grid.setTextColor(style.borderColor);
+}
+
+
 void RectDemo::setupGrid() {
 
     grid.setGridSize({24, 12});
-    grid.setColors(DEMO_STYLE.primaryBackColor, DEMO_STYLE.secondaryBackColor);
-    grid.setTextColor(DEMO_STYLE.borderColor);
     grid.enableNumbers(true);
     grid.enableOffset(false);
 }
