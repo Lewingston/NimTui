@@ -26,7 +26,7 @@ namespace TUI {
 
         private:
 
-            void onResize(Vec2<u32> oldSize, Vec2<u32> newSize) override;
+            void onResize() override;
 
             void setMenu();
 

@@ -31,7 +31,7 @@ void DemoMenu::draw(RenderBuffer& buffer, Vec2<s32> offset) {
 }
 
 
-void DemoMenu::onResize(Vec2<u32>, Vec2<u32>) {
+void DemoMenu::onResize() {
 
     setMenu();
 }

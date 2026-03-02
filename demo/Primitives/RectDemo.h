@@ -15,11 +15,11 @@ namespace TUI {
 
             void draw(RenderBuffer& renderBuffer, Vec2<s32> offset) override;
 
-            void onResize(Vec2<u32> oldSize, Vec2<u32> newSize) override;
-
         private:
 
             void setupGrid();
+
+            void onResize() override;
 
             Grid grid = Grid({0, 0}, getSize());
     };

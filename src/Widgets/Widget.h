@@ -32,7 +32,7 @@ namespace TUI {
 
         protected:
 
-            virtual void onResize(Vec2<u32> oldSize, Vec2<u32> newSize);
+            virtual void onResize();
 
         private:
 

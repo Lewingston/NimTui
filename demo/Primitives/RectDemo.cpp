@@ -89,7 +89,7 @@ void RectDemo::draw(RenderBuffer& renderBuffer, Vec2<s32> offset) {
 }
 
 
-void RectDemo::onResize(Vec2<u32>, Vec2<u32>) {
+void RectDemo::onResize() {
 
     grid.setSize(getSize());
 }
