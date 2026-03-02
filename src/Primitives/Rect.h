@@ -42,7 +42,7 @@ namespace TUI {
             void setBorderTop(const Border& border) { borderTop = border; }
             void setBorderLeft(const Border& border) { borderLeft = border; }
             void setBorderRight(const Border& border) { borderRight = border; }
-            void setBorderBottom(const Border& border) { borderRight = border; }
+            void setBorderBottom(const Border& border) { borderBottom = border; }
 
             void setBorderInset(BorderInset inset) { borderInset = inset; }
 
@@ -65,7 +65,7 @@ namespace TUI {
 
             BorderInset borderInset = BorderInset::HORIZONTAL;
 
-            Color backColor   = Color::WHITE;
+            Color backColor = Color::WHITE;
 
     };
 }
