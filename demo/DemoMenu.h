@@ -18,6 +18,8 @@ namespace TUI {
 
             virtual ~DemoMenu() = default;
 
+            void setStyle(const Style& style) override;
+
             void draw(RenderBuffer& buffer, Vec2<s32> offset) override;
 
             void onSelection(const std::function<void(const std::string&)>& callback);

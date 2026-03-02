@@ -16,10 +16,16 @@ DemoMenu::DemoMenu(Vec2<s32> pos,
 
     setMenu();
 
-    menu.setStyle(DEMO_STYLE);
-
     for (const auto& element : elements)
         menu.addElement(element);
+}
+
+
+void DemoMenu::setStyle(const Style& style) {
+
+    DemoPage::setStyle(style);
+
+    menu.setStyle(style);
 }
 
 

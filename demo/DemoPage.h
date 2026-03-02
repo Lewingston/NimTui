@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Widgets/Widget.h"
+#include "Style.h"
 
 #include <functional>
 
@@ -14,6 +15,8 @@ namespace TUI {
 
             virtual ~DemoPage() = default;
 
+            virtual void setStyle(const Style& style);
+
             virtual bool handleKeyEvent(Console::KeyEvent keyEvent) override;
 
             virtual void onLeave(std::function<void()> callback);
@@ -22,9 +25,13 @@ namespace TUI {
 
             virtual void leaveMenu();
 
+            [[nodiscard]] const Style& getStyle() const noexcept { return style; }
+
         private:
 
             std::function<void()> onLeaveCallback;
+
+            Style style = DEFAULT_STYLE;
 
     };
 }

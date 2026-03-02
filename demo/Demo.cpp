@@ -1,6 +1,7 @@
 
 #include "Demo.h"
 #include "Console/RenderBuffer.h"
+#include "DemoStyle.h"
 
 #include <iostream>
 
@@ -46,6 +47,8 @@ void Demo::setupDemoMenu(DemoMenu& menu) {
 
         demoSelected(item);
     });
+
+    menu.setStyle(DEMO_STYLE);
 }
 
 
@@ -55,6 +58,8 @@ void Demo::setupDemoPage(DemoPage& page) {
 
         leaveDemoPage();
     });
+
+    page.setStyle(DEMO_STYLE);
 }
 
 
