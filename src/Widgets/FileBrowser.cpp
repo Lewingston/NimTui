@@ -3,8 +3,6 @@
 
 #include <filesystem>
 
-#include <ranges>
-
 #include <windows.h>
 
 using namespace TUI;

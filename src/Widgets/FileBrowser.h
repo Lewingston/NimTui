@@ -2,7 +2,6 @@
 
 #include "ListView.h"
 
-#include <limits>
 #include <filesystem>
 
 namespace TUI {
