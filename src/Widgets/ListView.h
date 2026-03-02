@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Widget.h"
+#include "Style.h"
 
 #include <vector>
 #include <string>
@@ -22,6 +23,8 @@ namespace TUI {
             void removeElement(const std::string& entry);
             void removeAllElements();
 
+            void setStyle(const Style& style);
+
             [[nodiscard]] const std::string& getSelectedElement() const;
 
             [[nodiscard]] u32 getCursorPosition() const;
@@ -31,8 +34,6 @@ namespace TUI {
             [[nodiscard]] const std::vector<std::string> getAllElements() const noexcept;
 
             [[nodiscard]] const std::string& getElementAt(u32 pos) const;
-
-            void setFrontColor(Color color) { frontColor = color; }
 
             void enableWrapAround(bool enable);
 
@@ -70,11 +71,8 @@ namespace TUI {
             u32 selectedElementIndex = 0;
             u32 scrollPosition = 0;
 
-            Color backColorSelected = Color::WHITE;
-            Color frontColorSelected = Color::BLACK;
-
-            Color frontColor = Color::WHITE;
-
             bool wrapAround = true;
+
+            Style style = DEFAULT_STYLE;
     };
 }

@@ -57,16 +57,24 @@ void ListView::drawListElement(const std::string& entry,
 
     if (selected) {
 
-        text.setFrontColor(frontColorSelected);
-        text.setBackColor(backColorSelected);
+        text.setFrontColor(style.text.selected.color);
+        text.setBackColor(style.text.selected.backgroundColor);
 
     } else {
 
-        text.setBackColor(getBackColor());
-        text.setFrontColor(frontColor);
+        text.setBackColor(style.text.backgroundColor);
+        text.setFrontColor(style.text.color);
     }
 
     text.draw(buffer);
+}
+
+
+void ListView::setStyle(const Style& style) {
+
+    setBackColor(style.secondaryBackColor);
+
+    this->style = style;
 }
 
 
