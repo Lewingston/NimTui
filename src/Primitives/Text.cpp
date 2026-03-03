@@ -114,7 +114,7 @@ s32 Text::getLinePosY(u32 lineIndex) const {
         case Align::CENTER_RIGHT: {
 
             const s32 centerOffset = static_cast<s32>(lines.size()) / 2;
-            return getPos().getY() + linePos + centerOffset;
+            return getPos().getY() + linePos - centerOffset;
         }
 
         case Align::BOTTOM_LEFT:
