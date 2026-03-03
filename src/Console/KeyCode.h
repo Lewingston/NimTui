@@ -1,5 +1,6 @@
 
 #include "Types.h"
+#include "EnumClassBinaryOperators.h"
 
 namespace TUI {
 
@@ -134,4 +135,8 @@ namespace TUI {
         SCROLLLOCK = 1 << 7,
         CAPSLOCK   = 1 << 8
     };
+
+    // Enable binary operations for KeyModifier enum
+    template<>
+    struct enable_bitmask_operators<KeyModifier> : std::true_type {};
 }
