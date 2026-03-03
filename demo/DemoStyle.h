@@ -4,10 +4,10 @@
 
 namespace TUI {
 
-    static constexpr Color primaryBackColor   = Color(0x050919ff);
-    static constexpr Color secondaryBackColor = Color(0x080D26ff);
-    static constexpr Color borderColor        = Color(0x112240ff);
-    static constexpr Color textColor          = Color(0xbc7d10ff);
+    static constexpr Color primaryBackColor   = Color(26, 33, 46);
+    static constexpr Color secondaryBackColor = Color(20, 27, 36);
+    static constexpr Color borderColor        = Color(60, 74, 102);
+    static constexpr Color textColor          = Color(147, 164, 195);
 
     static constexpr Style DEMO_STYLE = {
 
