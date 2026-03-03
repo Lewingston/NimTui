@@ -4,6 +4,7 @@
 #include "DemoPage.h"
 #include "Console/ConsoleWindow.h"
 #include "Primitives/RectDemo.h"
+#include "Primitives/TextDemo.h"
 #include "ImageBrowserDemo/ImageBrowser.h"
 
 namespace TUI {
@@ -40,7 +41,8 @@ namespace TUI {
                 "Image Browser",
                 "Mandelbrot",
                 "Game of Life",
-                "Stock Chart"
+                "Stock Chart",
+                "Info"
             });
 
             DemoMenu primitivesMenu = DemoMenu({0, 0}, window.getSize(), {
@@ -56,6 +58,7 @@ namespace TUI {
             });
 
             RectDemo rectDemo = RectDemo({0, 0}, window.getSize());
+            TextDemo textDemo = TextDemo({0, 0}, window.getSize());
 
             ImageBrowser imageBrowser = ImageBrowser({0, 0}, window.getSize());
 
