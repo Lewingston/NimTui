@@ -56,6 +56,6 @@ namespace TUI {
 
             Align align = Align::TOP_LEFT;
 
-            bool blockAlign = true;
+            bool blockAlign = false;
     };
 }
