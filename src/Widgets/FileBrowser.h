@@ -18,19 +18,11 @@ namespace TUI {
                 DRIVE
             };
 
-            enum class FileType : u8 {
-
-                NOT_A_FILE,
-                IMAGE,
-                FILE
-            };
-
             struct FileTreeEntry {
 
                 std::filesystem::path path;
                 u32                   level = 0;
                 DirEntryType          entryType;
-                FileType              fileType = FileType::NOT_A_FILE;
                 char                  driveLetter = 0;
             };
             FileBrowser(Vec2<s32> pos, Vec2<u32> size);

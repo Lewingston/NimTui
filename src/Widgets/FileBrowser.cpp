@@ -89,7 +89,7 @@ std::vector<FileBrowser::FileTreeEntry> FileBrowser::buildParentDirEntries(const
 
         auto newDirs = parentDirs.parent_path();
         if (parentDirs == newDirs) {
-            result.emplace_back(parentDirs, depth, DirEntryType::DRIVE, FileType::NOT_A_FILE, currentDrive);
+            result.emplace_back(parentDirs, depth, DirEntryType::DRIVE, currentDrive);
             break;
         }
 
@@ -135,7 +135,6 @@ std::vector<FileBrowser::FileTreeEntry> FileBrowser::getRootDirectories() const 
             rootEntries.emplace_back(driveName,
                                      0,
                                      DirEntryType::DRIVE,
-                                     FileType::NOT_A_FILE,
                                      letter);
         }
     }
@@ -165,7 +164,6 @@ FileBrowser::FileTreeEntry FileBrowser::getFileTreeEntry(const std::filesystem::
         .path      = path,
         .level     = getDirectoryDepth(path),
         .entryType = DirEntryType::FILE,
-        .fileType  = FileType::NOT_A_FILE
     };
 }
 
