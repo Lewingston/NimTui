@@ -38,8 +38,6 @@ namespace TUI {
 
             void drawLine(const std::string& line, u32 lineIndex, RenderBuffer& buffer) const;
 
-            [[nodiscard]] bool checkBounds(Vec2<s32> pos, Vec2<u32> bufferSize) const;
-
             [[nodiscard]] Vec2<s32> getLinePos(u32 lineIndex) const;
             [[nodiscard]] s32 getLinePosX(u32 lineIndex) const;
             [[nodiscard]] s32 getLinePosY(u32 lineIndex) const;

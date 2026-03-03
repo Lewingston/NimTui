@@ -35,24 +35,12 @@ void Text::drawLine(const std::string& line,
         const auto info = Unicode::getInfo(line, ii);
         const std::string str = line.substr(ii, info.byteCount);
 
-        if (checkBounds(pos, buffer.getSize())) {
-
-            buffer.set(pos, { str, frontColor, backColor });
-        }
+        buffer.set(pos, { str, frontColor, backColor });
 
         ii += info.byteCount;
 
         pos += Vec2<s32>(info.width, 0);
     }
-}
-
-
-bool Text::checkBounds(Vec2<s32> pos, Vec2<u32> bufferSize) const {
-
-    return pos.getX() >= 0 &&
-           pos.getY() >= 0 &&
-           pos.getX() < static_cast<s32>(bufferSize.getWidth()) &&
-           pos.getY() < static_cast<s32>(bufferSize.getHeight());
 }
 
 
