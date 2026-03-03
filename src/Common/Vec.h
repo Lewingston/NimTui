@@ -56,4 +56,10 @@ namespace TUI {
 
         return Vec2<T>(vec.getX() * mult, vec.getY() * mult);
     }
+
+    template<typename T, typename U>
+    [[nodiscard]] Vec2<T> operator/(const Vec2<T>& vec, U div) {
+
+        return Vec2<T>(vec.getX() / div, vec.getY() / div);
+    }
 }
