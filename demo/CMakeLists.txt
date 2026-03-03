@@ -9,6 +9,8 @@ add_executable(${Name} ${SOURCE_FILES})
 
 target_compile_features(${Name} PRIVATE cxx_std_23)
 
+target_include_directories(${Name} SYSTEM PRIVATE ../lib)
+
 target_link_options(${Name} PRIVATE -static -static-libgcc -static-libstdc++)
 
 if (IMTUI_BUILD_STATIC_LIB)
