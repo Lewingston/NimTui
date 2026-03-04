@@ -65,6 +65,9 @@ if (IMTUI_BUILD_DEMO)
 
 endif()
 
+add_subdirectory(lib)
+
+# Custom target for creating coverage files
 add_custom_target(coverage
     COMMAND del /S /Q *.gcda
     COMMAND ctest --test-dir ./test/

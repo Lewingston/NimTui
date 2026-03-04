@@ -6,7 +6,6 @@ cmake_minimum_required(VERSION 3.10)
 enable_testing()
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ../src/*.cpp ../src/*.h)
-list(APPEND SOURCE_FILES ../lib/wtswidth/wtswidth.c)
 
 file(GLOB_RECURSE TEST_FILES CONFIGURE_DEPENDS ./*.cpp ./*.h)
 
@@ -40,7 +39,7 @@ target_compile_options(${Name} PRIVATE ${IMTUI_WARNING_FLAGS})
 
 target_link_options(${Name} PRIVATE -static -static-libgcc -static-libstdc++ --coverage -fno-lto)
 
-target_link_libraries(${Name} PRIVATE GTest::gtest_main)
+target_link_libraries(${Name} PRIVATE GTest::gtest_main wtswidth)
 
 # Register tests
 include(GoogleTest)

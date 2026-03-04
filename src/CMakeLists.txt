@@ -13,7 +13,6 @@ set(PRIVATE_INCLUDE_DIRS
 )
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ./*.cpp ./*.h)
-list(APPEND SOURCE_FILES ../lib/wtswidth/wtswidth.c)
 
 if (IMTUI_BUILD_STATIC_LIB)
 
@@ -27,6 +26,8 @@ if (IMTUI_BUILD_STATIC_LIB)
     set_target_properties(${Name}_static PROPERTIES OUTPUT_NAME ${Name})
 
     target_compile_features(${Name}_static PRIVATE cxx_std_23)
+
+    target_link_libraries(${Name}_static PRIVATE wtswidth)
 
 endif()
 
@@ -42,5 +43,7 @@ if (IMTUI_BUILD_SHARED_LIB)
     set_target_properties(${Name}_shared PROPERTIES OUTPUT_NAME ${Name})
 
     target_compile_features(${Name}_shared PRIVATE cxx_std_23)
+
+    target_link_libraries(${Name}_shared PRIVATE wtswidth)
 
 endif()
