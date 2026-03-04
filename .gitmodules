@@ -4,3 +4,6 @@
 [submodule "lib/wtswidth"]
 	path = lib/wtswidth
 	url = https://github.com/german-one/wtswidth---Windows-Terminal-string-width.git
+[submodule "lib/stb"]
+	path = lib/stb
+	url = https://github.com/nothings/stb.git
