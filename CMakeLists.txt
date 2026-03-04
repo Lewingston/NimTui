@@ -12,7 +12,7 @@ set(IMTUI_BUILD_DEMO       ON  CACHE BOOL "Build Demo")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(WARNING_FLAGS
+set(IMTUI_WARNING_FLAGS
     -Wall
     -Wextra
     -pedantic
@@ -46,7 +46,6 @@ set(WARNING_FLAGS
     -Werror=return-type
 )
 
-add_compile_options(${WARNING_FLAGS})
 if (IMTUI_BUILD_STATIC_LIB OR IMTUI_BUILD_SHARED_LIB)
 
     add_subdirectory(src)

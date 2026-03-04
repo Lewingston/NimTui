@@ -22,6 +22,8 @@ if (IMTUI_BUILD_STATIC_LIB)
     target_include_directories(${Name}_static PUBLIC ${PUBLIC_INCLUDE_DIRS})
     target_include_directories(${Name}_static SYSTEM PRIVATE ${PRIVATE_INCLUDE_DIRS})
 
+    target_compile_options(${Name}_static PRIVATE ${IMTUI_WARNING_FLAGS})
+
     set_target_properties(${Name}_static PROPERTIES OUTPUT_NAME ${Name})
 
     target_compile_features(${Name}_static PRIVATE cxx_std_23)
@@ -34,6 +36,8 @@ if (IMTUI_BUILD_SHARED_LIB)
 
     target_include_directories(${Name}_shared PUBLIC ${PUBLIC_INCLUDE_DIRS})
     target_include_directories(${Name}_shared SYSTEM PRIVATE ${PRIVATE_INCLUDE_DIRS})
+
+    target_compile_options(${Name}_shared PRIVATE ${IMTUI_WARNING_FLAGS})
 
     set_target_properties(${Name}_shared PROPERTIES OUTPUT_NAME ${Name})
 

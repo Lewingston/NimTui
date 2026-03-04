@@ -36,6 +36,7 @@ target_include_directories(${Name} PRIVATE ${PUBLIC_INCLUDE_DIRS})
 target_include_directories(${Name} SYSTEM PRIVATE ${PRIVATE_INCLUDE_DIRS})
 
 target_compile_options(${Name} PRIVATE ${COVERAGE_FLAGS})
+target_compile_options(${Name} PRIVATE ${IMTUI_WARNING_FLAGS})
 
 target_link_options(${Name} PRIVATE -static -static-libgcc -static-libstdc++ --coverage -fno-lto)
 
