@@ -6,9 +6,10 @@
 #include <iostream>
 
 using namespace TUI;
+using namespace Demo;
 
 
-Demo::Demo() :
+TuiDemo::TuiDemo() :
     currentDemoPage(demoMenu)
 {
     setupWindow();
@@ -23,7 +24,7 @@ Demo::Demo() :
 }
 
 
-void Demo::setupWindow() {
+void TuiDemo::setupWindow() {
 
     window.onKeyInput([this](Console::KeyEvent keyEvent) {
 
@@ -37,7 +38,7 @@ void Demo::setupWindow() {
 }
 
 
-void Demo::setupDemoMenu(DemoMenu& menu) {
+void TuiDemo::setupDemoMenu(DemoMenu& menu) {
 
     menu.onLeave([&]() {
 
@@ -53,7 +54,7 @@ void Demo::setupDemoMenu(DemoMenu& menu) {
 }
 
 
-void Demo::setupDemoPage(DemoPage& page) {
+void TuiDemo::setupDemoPage(DemoPage& page) {
 
     page.onLeave([&]() {
 
@@ -64,7 +65,7 @@ void Demo::setupDemoPage(DemoPage& page) {
 }
 
 
-void Demo::run() {
+void TuiDemo::run() {
 
     window.show();
 
@@ -79,7 +80,7 @@ void Demo::run() {
 }
 
 
-void Demo::draw() {
+void TuiDemo::draw() {
 
     auto& renderBuffer = *window.getRenderBuffer().lock();
 
@@ -90,19 +91,19 @@ void Demo::draw() {
 }
 
 
-void Demo::onKeyEvent(Console::KeyEvent keyEvent) {
+void TuiDemo::onKeyEvent(Console::KeyEvent keyEvent) {
 
     currentDemoPage.get().handleKeyEvent(keyEvent);
 }
 
 
-void Demo::onResize() {
+void TuiDemo::onResize() {
 
     currentDemoPage.get().setSize(window.getSize());
 }
 
 
-void Demo::leaveDemoPage() {
+void TuiDemo::leaveDemoPage() {
 
     if (&currentDemoPage.get() == &demoMenu) {
 
@@ -121,7 +122,7 @@ void Demo::leaveDemoPage() {
 }
 
 
-void Demo::demoSelected(const std::string& demo) {
+void TuiDemo::demoSelected(const std::string& demo) {
 
     if (&currentDemoPage.get() == &demoMenu) {
 

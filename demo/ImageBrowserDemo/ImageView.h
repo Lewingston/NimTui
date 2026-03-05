@@ -5,7 +5,7 @@
 #include "Style.h"
 #include "Primitives/Bitmap.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
     class ImageView : public Widget {
 

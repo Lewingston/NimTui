@@ -5,7 +5,7 @@
 
 #include <functional>
 
-namespace TUI {
+namespace TUI::Demo {
 
     class DemoPage : public Widget {
 

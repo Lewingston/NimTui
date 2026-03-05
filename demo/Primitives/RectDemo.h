@@ -3,7 +3,7 @@
 #include "../DemoPage.h"
 #include "Widgets/Grid.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
     class RectDemo : public DemoPage {
 

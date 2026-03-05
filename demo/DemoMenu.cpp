@@ -5,6 +5,7 @@
 #include <algorithm>
 
 using namespace TUI;
+using namespace Demo;
 
 
 DemoMenu::DemoMenu(Vec2<s32> pos,

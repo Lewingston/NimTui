@@ -3,6 +3,7 @@
 #include "Primitives/Rect.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 RectDemo::RectDemo(Vec2<s32> pos, Vec2<u32> size) :

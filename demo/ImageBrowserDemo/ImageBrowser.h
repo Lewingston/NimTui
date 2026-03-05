@@ -4,7 +4,7 @@
 #include "Widgets/FileBrowser.h"
 #include "ImageView.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
     class ImageBrowser : public DemoPage {
 

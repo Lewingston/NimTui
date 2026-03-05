@@ -9,6 +9,7 @@
 #include "stb/stb_image_resize2.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 ImageView::ImageView(Vec2<s32> pos, Vec2<s32> size) :

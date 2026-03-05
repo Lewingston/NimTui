@@ -2,6 +2,7 @@
 #include "TextDemo.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 TextDemo::TextDemo(Vec2<s32> pos, Vec2<u32> size) :

@@ -4,7 +4,7 @@
 #include "Widgets/Grid.h"
 #include "Primitives/Text.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
     class TextDemo : public DemoPage {
 

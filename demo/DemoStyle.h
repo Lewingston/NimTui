@@ -2,7 +2,7 @@
 
 #include "Style.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
     static constexpr Color primaryBackColor   = Color(26, 33, 46);
     static constexpr Color secondaryBackColor = Color(20, 27, 36);

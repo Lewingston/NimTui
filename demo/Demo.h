@@ -7,13 +7,13 @@
 #include "Primitives/TextDemo.h"
 #include "ImageBrowserDemo/ImageBrowser.h"
 
-namespace TUI {
+namespace TUI::Demo {
 
-    class Demo {
+    class TuiDemo {
 
         public:
 
-            Demo();
+            TuiDemo();
 
             void run();
 

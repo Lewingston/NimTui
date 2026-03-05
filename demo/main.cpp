@@ -2,11 +2,12 @@
 #include "Demo.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 int main() {
 
-    Demo demo;
+    TuiDemo demo;
     demo.run();
 
     return 0;

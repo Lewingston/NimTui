@@ -3,6 +3,7 @@
 #include "Primitives/Line.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 ImageBrowser::ImageBrowser(Vec2<s32> pos, Vec2<u32> size) :

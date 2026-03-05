@@ -2,6 +2,7 @@
 #include "DemoPage.h"
 
 using namespace TUI;
+using namespace Demo;
 
 
 DemoPage::DemoPage(Vec2<s32> pos, Vec2<u32> size) :
