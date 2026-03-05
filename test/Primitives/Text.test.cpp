@@ -6,6 +6,7 @@
 #include "../TestUtils.h"
 
 using namespace TUI;
+using namespace Test;
 
 using CharData = RenderBuffer::CharData;
 

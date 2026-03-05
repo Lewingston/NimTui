@@ -4,7 +4,7 @@
 
 #include "Console/RenderBuffer.h"
 
-namespace TUI {
+namespace TUI::Test {
 
     class TestUtils {
 
