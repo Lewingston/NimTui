@@ -58,7 +58,7 @@ void ImageView::draw(RenderBuffer& buffer, Vec2<s32> offset) {
     updateImagePos(offset);
     scaledImage.draw(buffer);
 
-    const Text text(message, grid.getPos() + offset + getPos() + static_cast<Vec2<s32>>(grid.getSize() / 2));
+    const Text text(message, grid.getPos() + offset + getPos() + static_cast<Vec2<s32>>(grid.getSize()) / 2);
     text.draw(buffer);
 }
 
